@@ -14,9 +14,35 @@ namespace Map_Animations
         private static Vector2 position = Vector2.Zero;
         private static Vector2 viewPortSize = Vector2.Zero; // number of pixels to the right and below of the camera position (top left)
         private static Rectangle worldRectangle = new Rectangle(0, 0, 0, 0); // boundaries of the map
+        public Matrix transform;
+        public static float zoom = 1.0f;
+        public static float rotation = 0.0f;
         #endregion
 
         #region Properties
+        //public static void CameraZoom(float zooms)
+        //{
+        //    zoom = zooms;
+        //}
+        //public static float Zoom
+        //{
+        //    get { return zoom; }
+        //    set { zoom = value; if (zoom < 0.1f) zoom = 0.1f; } // Stops image from flipping
+        //}
+        //public float Rotation
+        //{
+        //    get { return rotation; }
+        //    set { rotation = value; }
+        //}
+        //public Matrix get_transformation(GraphicsDevice graphicsDevice)
+        //{
+        //    transform =       // Thanks to o KB o for this solution
+        //      Matrix.CreateTranslation(new Vector3(-Position.X, -Position.Y, 0)) *
+        //                                 Matrix.CreateRotationZ(Rotation) *
+        //                                 Matrix.CreateScale(new Vector3(Zoom, Zoom, 0)) *
+        //                                 Matrix.CreateTranslation(new Vector3(ViewPortWidth * 0.5f, ViewPortHeight * 0.5f, 1));
+        //    return transform;
+        //}
         public static Vector2 Position // Top Left of screen is where the camera stays
         {
             get { return position; }
@@ -50,10 +76,16 @@ namespace Map_Animations
             {
                 return new Rectangle((int)Position.X, (int)Position.Y, ViewPortWidth, ViewPortHeight);
             }
+            
         }
         #endregion
 
         #region Public Methods
+        public static void ZoomAction(float x)
+        {
+            //Zoom += x;
+        }
+
         public static void Move(Vector2 offset) // moves the camera on focused point
         {
             Position += offset;

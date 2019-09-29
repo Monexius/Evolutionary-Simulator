@@ -13,6 +13,7 @@ namespace Evolutionary_Sim
         public float Ypos { get; set; }
         public float Delay { get; set; }
         public float Radians { get; set; }
+
         public float Scale
         {
             get
@@ -31,7 +32,7 @@ namespace Evolutionary_Sim
             Delay -= deltaTimeInMilliseconds;
             if (Delay < 0)
             {
-                Radians += deltaTimeInMilliseconds / 200.0f;
+                Radians += deltaTimeInMilliseconds / 100.0f;
             }
         }
     }

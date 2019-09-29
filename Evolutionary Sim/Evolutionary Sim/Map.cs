@@ -19,7 +19,7 @@ namespace Map_Animations
 
       
         public static int generations;
-        public static int caveThreshold = 0;
+        public static int caveThreshold = 5;
         public static int wallChancePerSquare = 0;
 
         static private Texture2D texture;
