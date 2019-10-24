@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,27 +11,32 @@ namespace Map_Animations
 {
     class Map
     {
-
         #region Declarations
         public const int TileWidth = 16;
         public const int TileHeight = 16;
         public const int MapWidth = 1000;
         public const int MapHeight = 500;
 
-      
         public static int generations;
         public static int caveThreshold = 5;
         public static int wallChancePerSquare = 0;
 
+        static private int counter;
         static private Texture2D texture;
 
-        public static Dictionary<int,Rectangle> tiles = new Dictionary<int, Rectangle>();
-        
+        public static Dictionary<int, Rectangle> tiles = new Dictionary<int, Rectangle>();
+
         static private int[,] mapSquares = new int[MapWidth, MapHeight]; // total amount of squares
+        static private int[,] layer2 = new int[MapWidth, MapHeight]; // total amount of squares
+        
+        public static int[] mapFruitBushesX = new int[1000];
+        public static int[] mapFruitBushesY = new int[1000];
 
         static private Random rnd = new Random();
 
         #endregion
+        //public int mapFruitBushesX { get; set; }
+        //public int mapFruitBushesY { get; set; }
 
         #region Initialization
         static public void Initialize(Texture2D tileTexture, int cycles, int caveDensity, int wallChance)
@@ -39,10 +45,11 @@ namespace Map_Animations
             wallChancePerSquare = wallChance;
             caveThreshold = caveDensity;
             texture = tileTexture;
-
+           
             tiles.Clear();
-            tiles.Add(1,new Rectangle(Tile(0), Tile(0), TileWidth, TileHeight)); //Grass Tile 1
-            tiles.Add(2,new Rectangle(Tile(0), Tile(1), TileWidth, TileHeight)); //Water Tile 1
+            tiles.Add(0, new Rectangle(Tile(0), Tile(10), TileWidth, TileHeight));//Empty
+            tiles.Add(1, new Rectangle(Tile(0), Tile(0), TileWidth, TileHeight)); //Grass Tile 1
+            tiles.Add(2, new Rectangle(Tile(0), Tile(1), TileWidth, TileHeight)); //Water Tile 1
 
             tiles.Add(3, new Rectangle(Tile(1), Tile(0), TileWidth, TileHeight)); //Corner Top Left
             tiles.Add(4, new Rectangle(Tile(2), Tile(0), TileWidth, TileHeight)); //Top
@@ -51,7 +58,7 @@ namespace Map_Animations
             tiles.Add(7, new Rectangle(Tile(5), Tile(0), TileWidth, TileHeight)); //In Top
             tiles.Add(8, new Rectangle(Tile(6), Tile(0), TileWidth, TileHeight)); //In Corner Top Right
 
-            tiles.Add(9,  new Rectangle(Tile(1), Tile(1), TileWidth, TileHeight)); //Left
+            tiles.Add(9, new Rectangle(Tile(1), Tile(1), TileWidth, TileHeight)); //Left
             tiles.Add(10, new Rectangle(Tile(2), Tile(1), TileWidth, TileHeight)); //Grass Tile 1
             tiles.Add(11, new Rectangle(Tile(3), Tile(1), TileWidth, TileHeight)); //Right
             tiles.Add(12, new Rectangle(Tile(4), Tile(1), TileWidth, TileHeight)); //In Right
@@ -64,22 +71,14 @@ namespace Map_Animations
             tiles.Add(18, new Rectangle(Tile(4), Tile(2), TileWidth, TileHeight)); //In Corner Bottom Left
             tiles.Add(19, new Rectangle(Tile(5), Tile(2), TileWidth, TileHeight)); //In Bottom
             tiles.Add(20, new Rectangle(Tile(6), Tile(2), TileWidth, TileHeight)); //In Corner Bottom Right
-
-
-
-
-            for (int x = 0; x < MapWidth; x++)
-            {
-                for (int y = 0; y < MapHeight; y++) // initialising each tile
-                {
-                    mapSquares[x, y] = 1;
-                }
-            }
+            //Plants
+            tiles.Add(21, new Rectangle(Tile(0), Tile(5), TileWidth, TileHeight)); // PLant Bush
 
             GenerateRandomMap();
             GenerateCaves();
             GenerateTerrain();
-            generateDetails(); 
+            generateDetails();
+
         }
         #endregion
 
@@ -128,12 +127,12 @@ namespace Map_Animations
 
         #region Information about Map Tiles
 
-        static public int GetTileAtSquare(int tileX, int tileY) // gets the tile index [x,y]
+        static public int GetTileAtSquare(int tileX, int tileY, int [,] layer) // gets the tile index [x,y]
         {
             if ((tileX >= 0) && (tileX < MapWidth) && // gets square till end of screen
                (tileY >= 0) && (tileY < MapHeight))
             {
-                return mapSquares[tileX, tileY];
+                return layer[tileX, tileY];
             }
             else
             {
@@ -141,30 +140,32 @@ namespace Map_Animations
             }
         }
 
-        static public void SetTileAtSquare(int tileX, int tileY, int tile) // allows the index of a tile to be changed
+        static public void SetTileAtSquare(int tileX, int tileY, int tile, int [,]layer) // allows the index of a tile to be changed
         {
             if ((tileX >= 0) && (tileX < MapWidth) &&
                (tileY >= 0) && (tileY < MapHeight))
             {
-                mapSquares[tileX, tileY] = tile;
+                layer[tileX, tileY] = tile;
             }
         }
 
-        static public int GetTileAtPixel(int pixelX, int pixelY) // gets a tile if a pixel is in it
+        static public int GetTileAtPixel(int pixelX, int pixelY, int [,] layer) // gets a tile if a pixel is in it
         {
             return GetTileAtSquare(GetSquareByPixelX(pixelX),
-                                   GetSquareByPixelY(pixelY));
+                                   GetSquareByPixelY(pixelY),
+                                   layer);
         }
 
-        static public int GetTileAtPixel(Vector2 pixelLocation)
+        static public int GetTileAtPixel(Vector2 pixelLocation, int [,] layer)
         {
             return GetTileAtPixel((int)pixelLocation.X,
-                                  (int)pixelLocation.Y);
+                                  (int)pixelLocation.Y,
+                                  layer);
         }
-       
-        static public bool IsWallTile(int tileX, int tileY) // checks if tile is a wall
+
+        static public bool IsWallTile(int tileX, int tileY, int[,] layer) // checks if tile is a wall
         {
-            int tileIndex = GetTileAtSquare(tileX, tileY);
+            int tileIndex = GetTileAtSquare(tileX, tileY, layer);
 
             if (tileIndex == -1)
             {
@@ -174,21 +175,22 @@ namespace Map_Animations
             return tileIndex >= 2; // water tile and up
         }
 
-        static public bool IsWallTile(Vector2 square) // checks if tile is solid
+        static public bool IsWallTile(Vector2 square, int [,] layer) // checks if tile is solid
         {
-            return IsWallTile((int)square.X, (int)square.Y);
+            return IsWallTile((int)square.X, (int)square.Y, layer);
         }
 
-        static public bool IsWallTileByPixel(Vector2 pixelLocation)
+        static public bool IsWallTileByPixel(Vector2 pixelLocation, int [,] layer)
         {
             return IsWallTile(
                 GetSquareByPixelX((int)pixelLocation.X),
-                GetSquareByPixelY((int)pixelLocation.Y));
+                GetSquareByPixelY((int)pixelLocation.Y),
+                layer);
         }
         #endregion
 
         #region Drawing
-        static public void Draw(SpriteBatch spriteBatch)
+        static public void Draw(SpriteBatch spriteBatch, bool repeat)
         {
             int startX = GetSquareByPixelX((int)Camera.Position.X); // decides how many squares should be drawn
             int endX = GetSquareByPixelX((int)Camera.Position.X + Camera.ViewPortWidth);
@@ -197,13 +199,31 @@ namespace Map_Animations
             int endY = GetSquareByPixelY((int)Camera.Position.Y + Camera.ViewPortHeight);
 
             for (int x = startX; x <= endX; x++)
+            {
                 for (int y = startY; y <= endY; y++)
                 {
-                    if ((x >= 0) && (y >= 0) && (x < MapWidth) && (y < MapHeight))
+                    if ((x >= 0) && (y >= 0) && (x < MapWidth) && (y < MapHeight)) // Layer 1
                     {
-                        spriteBatch.Draw(texture, SquareScreenRectangle(x, y), tiles[GetTileAtSquare(x, y)], Color.White); // get square gets the position in which to draw
+                        spriteBatch.Draw(texture, SquareScreenRectangle(x, y), tiles[GetTileAtSquare(x, y, mapSquares)], Color.White); // get square gets the position in which to draw
                     }
                 }
+            }
+            for (int x = startX; x <= endX; x++)
+            {
+                for (int y = startY; y <= endY; y++)
+                {
+                    if ((x >= 0) && (y >= 0) && (x < MapWidth) && (y < MapHeight)) // Layer 2
+                    {
+                        spriteBatch.Draw(texture, SquareScreenRectangle(x, y), tiles[GetTileAtSquare(x, y, layer2)], Color.White); // get square gets the position in which to draw
+                    }
+                }
+            }
+        }
+
+        public static void ClearArray()
+        {
+            mapSquares = new int[MapWidth, MapHeight];
+            layer2 = new int[MapWidth, MapHeight];
         }
         #endregion
 
@@ -256,7 +276,6 @@ namespace Map_Animations
                         {
                             for (int b = 0; b < roomHeight; b++)
                             {
-
                                 mapSquares[x, y] = 2; // water tile
                                 isFreeSpace = false;
 
@@ -275,46 +294,46 @@ namespace Map_Animations
                     for (int y = 0; y < MapHeight; y++) // 50x50
                     {
                             int boxCounter = 0;
-                            if (IsWallTile(x + 1, y)) // Right
+                            if (IsWallTile(x + 1, y, mapSquares)) // Right
                             {
                                 boxCounter++;
                             }
-                             if (IsWallTile(x - 1, y)) // Left
+                             if (IsWallTile(x - 1, y, mapSquares)) // Left
                             {
                                 boxCounter++;
                             }
-                             if (IsWallTile(x, y - 1)) // Up
+                             if (IsWallTile(x, y - 1, mapSquares)) // Up
                             {
                                 boxCounter++;
                             }
-                             if (IsWallTile(x, y + 1)) // Down
+                             if (IsWallTile(x, y + 1, mapSquares)) // Down
                             {
                                 boxCounter++;
                             }
-                             if (IsWallTile(x + 1, y - 1)) // Right + Up
+                             if (IsWallTile(x + 1, y - 1, mapSquares)) // Right + Up
                             {
                                 boxCounter++;
                             }
-                             if (IsWallTile(x + 1, y + 1)) // Right + Down
+                             if (IsWallTile(x + 1, y + 1, mapSquares)) // Right + Down
                             {
                                 boxCounter++;
                             }
-                             if (IsWallTile(x - 1, y - 1)) // Left + Up
+                             if (IsWallTile(x - 1, y - 1, mapSquares)) // Left + Up
                             {
                                 boxCounter++;
                             }
-                             if (IsWallTile(x - 1, y + 1)) // Left + Up
+                             if (IsWallTile(x - 1, y + 1, mapSquares)) // Left + Up
                             {
                                 boxCounter++;
                             }
-                        if (IsWallTile(x, y))// if water
+                        if (IsWallTile(x, y, mapSquares))// if water
                         {
                             if (boxCounter < caveThreshold)
                             {
                                 mapSquares[x, y] = 1;// grass tile
                             }
                         }
-                        if (!IsWallTile(x, y)) // if floor
+                        if (!IsWallTile(x, y, mapSquares)) // if floor
                         {
                             if (boxCounter >= caveThreshold)
                             {
@@ -325,49 +344,55 @@ namespace Map_Animations
                 }
             }
         }
-        //static public void spawnGrass(int x, int y)
-        //{
-        //    if (GetTileAtSquare(x, y) == 1)// if floor
-        //    {
-        //        bool surroundBarrier = false;
-        //        if (GetTileAtSquare(x + 1, y) == 2) // Right
-        //        {
-        //            surroundBarrier = true;
-        //        }
-        //        if (GetTileAtSquare(x - 1, y) == 2) // Left
-        //        {
-        //            surroundBarrier = true;
-        //        }
-        //        if (GetTileAtSquare(x, y - 1) == 2) // Up
-        //        {
-        //            surroundBarrier = true;
-        //        }
-        //        if (GetTileAtSquare(x, y + 1) == 2) // Down
-        //        {
-        //            surroundBarrier = true;
-        //        }
-        //        if (GetTileAtSquare(x + 1, y - 1) == 2) // Right + Up
-        //        {
-        //            surroundBarrier = true;
-        //        }
-        //        if (GetTileAtSquare(x + 1, y + 1) == 2) // Right + Down
-        //        {
-        //            surroundBarrier = true;
-        //        }
-        //        if (GetTileAtSquare(x - 1, y - 1) == 2) // Left + Up
-        //        {
-        //            surroundBarrier = true;
-        //        }
-        //        if (GetTileAtSquare(x - 1, y + 1) == 2) // Left + Up
-        //        {
-        //            surroundBarrier = true;
-        //        }
-        //        if (surroundBarrier == false)
-        //            if (rnd.Next(0, 80) <= wallChancePerSquare) // chance to spawn grass
-        //                mapSquares[x, y] = 3;
-
-        //    }
-        //}
+        static public void spawnBush(int x, int y)
+        {
+            int counter = 0;
+            if (GetTileAtSquare(x, y, mapSquares) == 1)// if floor
+              {
+                bool surroundBarrier = false;
+                if (GetTileAtSquare(x + 1, y, mapSquares) == 2 || GetTileAtSquare(x + 1, y, layer2) == 21) // Right
+                {
+                    surroundBarrier = true;
+                }
+                if (GetTileAtSquare(x - 1, y, mapSquares) == 2 || GetTileAtSquare(x - 1, y, layer2) == 21) // Left
+                {
+                    surroundBarrier = true;
+                }
+                if (GetTileAtSquare(x, y - 1, mapSquares) == 2 || GetTileAtSquare(x, y - 1, layer2) == 21) // Up
+                {
+                    surroundBarrier = true;
+                }
+                if (GetTileAtSquare(x, y + 1, mapSquares) == 2 || GetTileAtSquare(x, y + 1, layer2) == 21) // Down
+                {
+                    surroundBarrier = true;
+                }
+                if (GetTileAtSquare(x + 1, y - 1, mapSquares) == 2 || GetTileAtSquare(x + 1, y - 1, layer2) == 21) // Right + Up
+                {
+                    surroundBarrier = true;
+                }
+                if (GetTileAtSquare(x + 1, y + 1, mapSquares) == 2 || GetTileAtSquare(x + 1, y + 1, layer2) == 21) // Right + Down
+                {
+                    surroundBarrier = true;
+                }
+                if (GetTileAtSquare(x - 1, y - 1, mapSquares) == 2 || GetTileAtSquare(x - 1, y - 1, layer2) == 21) // Left + Up
+                {
+                    surroundBarrier = true;
+                }
+                if (GetTileAtSquare(x - 1, y + 1, mapSquares) == 2 || GetTileAtSquare(x - 1, y + 1, layer2) == 21) // Left + Up
+                {
+                    surroundBarrier = true;
+                }
+                if (surroundBarrier == false)
+                    if (rnd.Next(32, 99) <= wallChancePerSquare)
+                    { // chance to spawn grass
+                        
+                        layer2[x, y] = 21;
+                        mapFruitBushesX[counter] = x;
+                        mapFruitBushesY[counter] = y;
+                        counter++;
+                    }
+             }
+        }
 
         //static public void spawnWater(int x, int y)
         //{
@@ -412,7 +437,6 @@ namespace Map_Animations
 
         //    }
         //}
-
         static public void generateDetails()
         {
 
@@ -426,18 +450,18 @@ namespace Map_Animations
             {
                 for (int y = 0; y < MapHeight; y++)
                 {
-                    if (GetTileAtSquare(x, y) == 1)
+                    if (GetTileAtSquare(x, y, mapSquares) == 1)
                     {
                         //if (GetTileAtSquare(x + 1, y) != 2 && GetTileAtSquare(x + 1, y + 1) == 2 && GetTileAtSquare(x, y + 1) == 2 && GetTileAtSquare(x - 1, y + 1) == 2 && GetTileAtSquare(x - 1, y) != 2
                         //    && GetTileAtSquare(x - 1, y - 1) != 2 && GetTileAtSquare(x, y - 1) != 2 && GetTileAtSquare(x + 1, y - 1) != 2) // If bottom
                         //{
                         //    mapSquares[x, y] = 7;
                         //}
-                        if (GetTileAtSquare(x, y - 1) == 2) // If top
+                        if (GetTileAtSquare(x, y - 1, mapSquares) == 2) // If top
                         {
                             mapSquares[x, y] = 4;
                         }
-                        if (GetTileAtSquare(x, y + 1) == 2 ) // If bottom
+                        if (GetTileAtSquare(x, y + 1, mapSquares) == 2 ) // If bottom
                         {
                             mapSquares[x, y] = 7;
                         }
@@ -635,8 +659,8 @@ namespace Map_Animations
             {
                 for (int y = 0; y < MapHeight; y++) 
                 {
-                    //spawnGrass(x, y);
-
+                   
+                    spawnBush(x, y);
                 }
             }
           /////////////////////////////////////////Water

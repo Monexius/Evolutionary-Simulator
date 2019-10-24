@@ -38,11 +38,10 @@ namespace Map_Animations
         #endregion
 
         #region Constructors
-        public Sprite(Vector2 worldLocation, Texture2D texture, Rectangle initialFrame, Vector2 velocity)
+        public Sprite(Vector2 worldLocation, Texture2D texture, Rectangle initialFrame)//48 
         {
             this.worldLocation = worldLocation;
             Texture = texture;
-            this.velocity = velocity;
             frames.Add(initialFrame);
         }
         #endregion
@@ -226,7 +225,6 @@ namespace Map_Animations
                 }
             }
         }
-
         #endregion
     }
 }
