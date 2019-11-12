@@ -46,7 +46,6 @@
     <Compile Include="Game1.cs" />
     <Compile Include="KeyboardManager.cs" />
     <Compile Include="Map.cs" />
-    <Compile Include="MapFruit.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ScreenTransition.cs" />
