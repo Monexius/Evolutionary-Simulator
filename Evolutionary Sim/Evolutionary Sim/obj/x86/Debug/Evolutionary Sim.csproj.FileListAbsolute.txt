@@ -25,3 +25,57 @@ D:\HONORS PROJECT\Evolutionary Sim\Evolutionary Sim\obj\x86\Debug\Evolutionary S
 D:\HONORS PROJECT\Evolutionary Sim\Evolutionary Sim\obj\x86\Debug\Evolutionary Sim.pdb
 D:\HONORS PROJECT\Evolutionary Sim\Evolutionary Sim\bin\Windows\x86\Debug\Content\Ev_TileSet.xnb
 D:\HONORS PROJECT\Evolutionary Sim\Evolutionary Sim\bin\Windows\x86\Debug\Content\GreenCircle.xnb
+C:\Users\monek\OneDrive\Documents\GitHub\Evolutionary-Simulator\Evolutionary Sim\Evolutionary Sim\bin\Windows\x86\Debug\Content\Ev_TileSet.xnb
+C:\Users\monek\OneDrive\Documents\GitHub\Evolutionary-Simulator\Evolutionary Sim\Evolutionary Sim\bin\Windows\x86\Debug\Content\GreenCircle.xnb
+C:\Users\monek\OneDrive\Documents\GitHub\Evolutionary-Simulator\Evolutionary Sim\Evolutionary Sim\bin\Windows\x86\Debug\Evolutionary Sim.exe
+C:\Users\monek\OneDrive\Documents\GitHub\Evolutionary-Simulator\Evolutionary Sim\Evolutionary Sim\bin\Windows\x86\Debug\Evolutionary Sim.pdb
+C:\Users\monek\OneDrive\Documents\GitHub\Evolutionary-Simulator\Evolutionary Sim\Evolutionary Sim\bin\Windows\x86\Debug\MonoGame.Framework.dll
+C:\Users\monek\OneDrive\Documents\GitHub\Evolutionary-Simulator\Evolutionary Sim\Evolutionary Sim\bin\Windows\x86\Debug\SharpDX.MediaFoundation.dll
+C:\Users\monek\OneDrive\Documents\GitHub\Evolutionary-Simulator\Evolutionary Sim\Evolutionary Sim\bin\Windows\x86\Debug\SharpDX.dll
+C:\Users\monek\OneDrive\Documents\GitHub\Evolutionary-Simulator\Evolutionary Sim\Evolutionary Sim\bin\Windows\x86\Debug\SharpDX.XAudio2.dll
+C:\Users\monek\OneDrive\Documents\GitHub\Evolutionary-Simulator\Evolutionary Sim\Evolutionary Sim\bin\Windows\x86\Debug\SharpDX.DXGI.dll
+C:\Users\monek\OneDrive\Documents\GitHub\Evolutionary-Simulator\Evolutionary Sim\Evolutionary Sim\bin\Windows\x86\Debug\SharpDX.Direct3D11.dll
+C:\Users\monek\OneDrive\Documents\GitHub\Evolutionary-Simulator\Evolutionary Sim\Evolutionary Sim\bin\Windows\x86\Debug\SharpDX.Direct2D1.dll
+C:\Users\monek\OneDrive\Documents\GitHub\Evolutionary-Simulator\Evolutionary Sim\Evolutionary Sim\bin\Windows\x86\Debug\SharpDX.XInput.dll
+C:\Users\monek\OneDrive\Documents\GitHub\Evolutionary-Simulator\Evolutionary Sim\Evolutionary Sim\bin\Windows\x86\Debug\MonoGame.Framework.xml
+C:\Users\monek\OneDrive\Documents\GitHub\Evolutionary-Simulator\Evolutionary Sim\Evolutionary Sim\bin\Windows\x86\Debug\SharpDX.MediaFoundation.xml
+C:\Users\monek\OneDrive\Documents\GitHub\Evolutionary-Simulator\Evolutionary Sim\Evolutionary Sim\bin\Windows\x86\Debug\SharpDX.xml
+C:\Users\monek\OneDrive\Documents\GitHub\Evolutionary-Simulator\Evolutionary Sim\Evolutionary Sim\bin\Windows\x86\Debug\SharpDX.XAudio2.xml
+C:\Users\monek\OneDrive\Documents\GitHub\Evolutionary-Simulator\Evolutionary Sim\Evolutionary Sim\bin\Windows\x86\Debug\SharpDX.DXGI.xml
+C:\Users\monek\OneDrive\Documents\GitHub\Evolutionary-Simulator\Evolutionary Sim\Evolutionary Sim\bin\Windows\x86\Debug\SharpDX.Direct3D11.xml
+C:\Users\monek\OneDrive\Documents\GitHub\Evolutionary-Simulator\Evolutionary Sim\Evolutionary Sim\bin\Windows\x86\Debug\SharpDX.Direct2D1.xml
+C:\Users\monek\OneDrive\Documents\GitHub\Evolutionary-Simulator\Evolutionary Sim\Evolutionary Sim\bin\Windows\x86\Debug\SharpDX.XInput.xml
+C:\Users\monek\OneDrive\Documents\GitHub\Evolutionary-Simulator\Evolutionary Sim\Evolutionary Sim\obj\x86\Debug\Evolutionary Sim.csprojAssemblyReference.cache
+C:\Users\monek\OneDrive\Documents\GitHub\Evolutionary-Simulator\Evolutionary Sim\Evolutionary Sim\obj\x86\Debug\Evolutionary Sim.csproj.CoreCompileInputs.cache
+C:\Users\monek\OneDrive\Documents\GitHub\Evolutionary-Simulator\Evolutionary Sim\Evolutionary Sim\obj\x86\Debug\Evolutionary Sim.csproj.CopyComplete
+C:\Users\monek\OneDrive\Documents\GitHub\Evolutionary-Simulator\Evolutionary Sim\Evolutionary Sim\obj\x86\Debug\Evolutionary Sim.exe
+C:\Users\monek\OneDrive\Documents\GitHub\Evolutionary-Simulator\Evolutionary Sim\Evolutionary Sim\obj\x86\Debug\Evolutionary Sim.pdb
+C:\Users\Szympon\Desktop\Evolutionary Sim\Evolutionary Sim\bin\Windows\x86\Debug\Content\Content\Ev_TileSet.xnb
+C:\Users\Szympon\Desktop\Evolutionary Sim\Evolutionary Sim\bin\Windows\x86\Debug\Content\Content\GreenCircle.xnb
+C:\Users\Szympon\Desktop\Evolutionary Sim\Evolutionary Sim\bin\Windows\x86\Debug\Content\Ev_TileSet.xnb
+C:\Users\Szympon\Desktop\Evolutionary Sim\Evolutionary Sim\bin\Windows\x86\Debug\Content\GreenCircle.xnb
+C:\Users\Szympon\Desktop\Evolutionary Sim\Evolutionary Sim\bin\Windows\x86\Debug\Evolutionary Sim.exe
+C:\Users\Szympon\Desktop\Evolutionary Sim\Evolutionary Sim\bin\Windows\x86\Debug\Evolutionary Sim.pdb
+C:\Users\Szympon\Desktop\Evolutionary Sim\Evolutionary Sim\bin\Windows\x86\Debug\MonoGame.Framework.dll
+C:\Users\Szympon\Desktop\Evolutionary Sim\Evolutionary Sim\bin\Windows\x86\Debug\SharpDX.MediaFoundation.dll
+C:\Users\Szympon\Desktop\Evolutionary Sim\Evolutionary Sim\bin\Windows\x86\Debug\SharpDX.dll
+C:\Users\Szympon\Desktop\Evolutionary Sim\Evolutionary Sim\bin\Windows\x86\Debug\SharpDX.XAudio2.dll
+C:\Users\Szympon\Desktop\Evolutionary Sim\Evolutionary Sim\bin\Windows\x86\Debug\SharpDX.DXGI.dll
+C:\Users\Szympon\Desktop\Evolutionary Sim\Evolutionary Sim\bin\Windows\x86\Debug\SharpDX.Direct3D11.dll
+C:\Users\Szympon\Desktop\Evolutionary Sim\Evolutionary Sim\bin\Windows\x86\Debug\SharpDX.Direct2D1.dll
+C:\Users\Szympon\Desktop\Evolutionary Sim\Evolutionary Sim\bin\Windows\x86\Debug\SharpDX.XInput.dll
+C:\Users\Szympon\Desktop\Evolutionary Sim\Evolutionary Sim\bin\Windows\x86\Debug\SharpDX.Direct3D9.dll
+C:\Users\Szympon\Desktop\Evolutionary Sim\Evolutionary Sim\bin\Windows\x86\Debug\MonoGame.Framework.xml
+C:\Users\Szympon\Desktop\Evolutionary Sim\Evolutionary Sim\bin\Windows\x86\Debug\SharpDX.MediaFoundation.xml
+C:\Users\Szympon\Desktop\Evolutionary Sim\Evolutionary Sim\bin\Windows\x86\Debug\SharpDX.xml
+C:\Users\Szympon\Desktop\Evolutionary Sim\Evolutionary Sim\bin\Windows\x86\Debug\SharpDX.XAudio2.xml
+C:\Users\Szympon\Desktop\Evolutionary Sim\Evolutionary Sim\bin\Windows\x86\Debug\SharpDX.DXGI.xml
+C:\Users\Szympon\Desktop\Evolutionary Sim\Evolutionary Sim\bin\Windows\x86\Debug\SharpDX.Direct3D11.xml
+C:\Users\Szympon\Desktop\Evolutionary Sim\Evolutionary Sim\bin\Windows\x86\Debug\SharpDX.Direct2D1.xml
+C:\Users\Szympon\Desktop\Evolutionary Sim\Evolutionary Sim\bin\Windows\x86\Debug\SharpDX.XInput.xml
+C:\Users\Szympon\Desktop\Evolutionary Sim\Evolutionary Sim\bin\Windows\x86\Debug\SharpDX.Direct3D9.xml
+C:\Users\Szympon\Desktop\Evolutionary Sim\Evolutionary Sim\obj\x86\Debug\Evolutionary Sim.csprojAssemblyReference.cache
+C:\Users\Szympon\Desktop\Evolutionary Sim\Evolutionary Sim\obj\x86\Debug\Evolutionary Sim.csproj.CoreCompileInputs.cache
+C:\Users\Szympon\Desktop\Evolutionary Sim\Evolutionary Sim\obj\x86\Debug\Evolutionary Sim.csproj.CopyComplete
+C:\Users\Szympon\Desktop\Evolutionary Sim\Evolutionary Sim\obj\x86\Debug\Evolutionary Sim.exe
+C:\Users\Szympon\Desktop\Evolutionary Sim\Evolutionary Sim\obj\x86\Debug\Evolutionary Sim.pdb
