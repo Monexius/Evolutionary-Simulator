@@ -13,13 +13,14 @@ namespace Evolutionary_Sim
     class KeyboardManager
     {
         Map map;
+
         int lastScrollState;
-        
         MouseState lastMouseState = new MouseState();
         KeyboardState lastKeyboardState = new KeyboardState();
 
-        public void HandleInput(GameTime gameTime, Texture2D spriteSheet )
+        public void HandleInput(GameTime gameTime, Texture2D spriteSheet)
         {
+          
             MouseState scrollState = Mouse.GetState();
             MouseState mouseState = Mouse.GetState();
             KeyboardState keyboardState = Keyboard.GetState();
@@ -48,14 +49,9 @@ namespace Evolutionary_Sim
             //Player.Update(gameTime);
             if (mouseState.LeftButton == ButtonState.Pressed && lastMouseState.LeftButton == ButtonState.Released)
             {
-                Map.ClearArray();
                 map = new Map();
-                Map.Initialize(spriteSheet, 2, 4, 33);
-
-               
-                //Map.Draw(spriteBatch);
+                Map.Initialize(spriteSheet, 2, 4, 32);
                 //Tiles,Smoothness of caves, tiles needed, Chance to spawn
-        
                 ScreenTransition.RunAnimation();
             }
             if (keyboardState.IsKeyDown(Keys.W) && lastKeyboardState.IsKeyUp(Keys.W))

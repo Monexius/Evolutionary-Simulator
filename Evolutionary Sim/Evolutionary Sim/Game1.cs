@@ -18,8 +18,7 @@ namespace Evolutionary_Sim
         KeyboardManager keyboardManager;
         Map map;
         Camera camera;
-        Sprite sprite;
-       // create a public list for the Fruit.cs so each instance of the object can be drawn in the draw with a foreach loop
+       
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -28,14 +27,11 @@ namespace Evolutionary_Sim
 
         protected override void Initialize()
         {
-            graphics.IsFullScreen = false;
             graphics.PreferredBackBufferHeight = 800;
-            graphics.PreferredBackBufferWidth = 1600;
+            graphics.PreferredBackBufferWidth = 1200;
             camera = new Camera();
             graphics.ApplyChanges();
             map = new Map();
-           // sprite = new Sprite(new Vector2(5, -5), spriteSheet, new Rectangle(32, 16, 0, 48), new Vector2(1, 1));
-            
             keyboardManager = new KeyboardManager();
             screenTransition = new ScreenTransition();
 
@@ -50,13 +46,9 @@ namespace Evolutionary_Sim
             Camera.WorldRectangle = new Rectangle(0, 0, 3600, 3600); // define border of camera for map
             Camera.ViewPortWidth = GraphicsDevice.Viewport.Width;
             Camera.ViewPortHeight = GraphicsDevice.Viewport.Height;
-            for (int x = 0; x < Map.mapFruitBushesX.Length; x++)
-            {
-                sprite = new Sprite(new Vector2(Map.mapFruitBushesX[x] * 16, Map.mapFruitBushesY[x] * 16), spriteSheet, new Rectangle(0, 96, 16, 16));
-            }
-            
+
             // Bigger Continents, neighbouring squares needed to change, chance of a water tile
-            getMap(spriteSheet); // initialise map
+            Map.Initialize(spriteSheet, 1, 4, 35);
             ScreenTransition.Initialise(circleTexture2D);
             ScreenTransition.RunAnimation();
             //Algorithm for spawning sprites here
@@ -73,24 +65,16 @@ namespace Evolutionary_Sim
             keyboardManager.HandleInput(gameTime, spriteSheet);
             base.Update(gameTime);
         }
-        public void getMap(Texture2D spriteSheet)
-        {
-            Map.Initialize(spriteSheet, 2, 4, 33);
-        }
+
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
-
             spriteBatch.Begin();
 
-            Map.Draw(spriteBatch, false);
+            Map.Draw(spriteBatch);
             ScreenTransition.Draw(spriteBatch, gameTime);
-            //sprite.Draw(spriteBatch);
-            //foreach(Sprite sprite in)
-            //{
-            //    //Make a list class
-            //}
-            sprite.Draw(spriteBatch);
+            //Player.Draw(spriteBatch);
+
             spriteBatch.End();
             base.Draw(gameTime);
         }
