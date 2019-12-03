@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <SourceFile>D:/HONORS PROJECT/Evolutionary Sim/Evolutionary Sim/Content/Ev_TileSet.png</SourceFile>
-  <SourceTime>2019-06-26T23:30:36.7634209+01:00</SourceTime>
-  <DestFile>D:/HONORS PROJECT/Evolutionary Sim/Evolutionary Sim/Content/bin/Windows/Ev_TileSet.xnb</DestFile>
-  <DestTime>2019-06-27T19:31:25.8244949+01:00</DestTime>
+  <SourceFile>C:/Users/Szympon/Desktop/Evolutionary Sim/Evolutionary Sim/Content/Ev_TileSet.png</SourceFile>
+  <SourceTime>2019-10-24T09:51:48+01:00</SourceTime>
+  <DestFile>C:/Users/Szympon/Desktop/Evolutionary Sim/Evolutionary Sim/Content/bin/Windows/Ev_TileSet.xnb</DestFile>
+  <DestTime>2019-10-24T18:19:00.1942358+01:00</DestTime>
   <Importer>TextureImporter</Importer>
   <ImporterTime>2017-03-01T15:05:36+00:00</ImporterTime>
   <Processor>TextureProcessor</Processor>
