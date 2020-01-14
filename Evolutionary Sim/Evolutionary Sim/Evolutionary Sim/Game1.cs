@@ -22,6 +22,7 @@ namespace Evolutionary_Sim
         Sprite sprite;
         MapFruit fruit;
         List<MapFruit> fruits;
+        Agent player;
 
        // create a public list for the Fruit.cs so each instance of the object can be drawn in the draw with a foreach loop
         public Game1()
@@ -54,7 +55,11 @@ namespace Evolutionary_Sim
             Camera.ViewPortWidth = GraphicsDevice.Viewport.Width;
             Camera.ViewPortHeight = GraphicsDevice.Viewport.Height;
             getMap(spriteSheet); // initialise map
-           
+            Agent.Initialize(spriteSheet, new Rectangle(16,48,18,18),1, new Vector2(300, 300));
+            Agent.Initialize(spriteSheet, new Rectangle(16, 48, 18, 18), 1, new Vector2(400, 300));
+            Agent.Initialize(spriteSheet, new Rectangle(16, 48, 18, 18), 1, new Vector2(500, 300));
+            Agent.Initialize(spriteSheet, new Rectangle(16, 48, 18, 18), 1, new Vector2(600, 300));
+
             // Bigger Continents, neighbouring squares needed to change, chance of a water tile
             //for (int x = 0; x < Map.mapFruitBushesX.Count; x++)
             //{
@@ -88,7 +93,7 @@ namespace Evolutionary_Sim
 
             spriteBatch.Begin();
             Map.Draw(spriteBatch, false);
-            MapFruit.Draw(spriteBatch);
+            Agent.Draw(spriteBatch);
             ScreenTransition.Draw(spriteBatch, gameTime);
             spriteBatch.End();
             base.Draw(gameTime);
