@@ -248,7 +248,7 @@ namespace Map_Animations
             { //surroundingTiles[x, y]
                 for (int y = 0; y < 3; y++)
                 {
-                    spriteBatch.Draw(texture, new Rectangle(1400 + (16 * x),10 + (16 * y),16,16), tiles[surroundingTiles[x,y]], Color.White);
+                    spriteBatch.Draw(texture, new Rectangle(1400 + (16 * x),10 + (16 * y),16,16), tiles[surroundingTiles[y,x]], Color.White);
                 }
             }
         }

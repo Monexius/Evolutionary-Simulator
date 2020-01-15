@@ -43,7 +43,7 @@ namespace Evolutionary_Sim
 
         public static int[,] GetSurroundingTiles()
         {
-            int[,] matrix = new int[2,2];
+            int[,] matrix = new int[3,3];
             matrix[0,0] = getCloseTile(-1, -1);
             matrix[0, 1] = getCloseTile(0, -1);
             matrix[0, 2] = getCloseTile(1, -1);
