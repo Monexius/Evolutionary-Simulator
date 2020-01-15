@@ -51,7 +51,7 @@ namespace Evolutionary_Sim
                 Map.ClearArray();
                 map = new Map();
                 Map.Initialize(spriteSheet, 2, 4, 33);
-
+                Game1.currentTime = 0f;
                
                 //Map.Draw(spriteBatch);
                 //Tiles,Smoothness of caves, tiles needed, Chance to spawn

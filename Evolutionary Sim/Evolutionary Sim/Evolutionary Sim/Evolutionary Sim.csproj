@@ -45,6 +45,8 @@
     <Compile Include="Camera.cs" />
     <Compile Include="FadeItem.cs" />
     <Compile Include="Game1.cs" />
+    <Compile Include="Genome.cs" />
+    <Compile Include="InnovationGenerator.cs" />
     <Compile Include="KeyboardManager.cs" />
     <Compile Include="Map.cs" />
     <Compile Include="MapFruit.cs" />

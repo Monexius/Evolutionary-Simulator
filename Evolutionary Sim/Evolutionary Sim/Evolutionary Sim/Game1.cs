@@ -24,7 +24,10 @@ namespace Evolutionary_Sim
         List<MapFruit> fruits;
         Agent player;
 
-       // create a public list for the Fruit.cs so each instance of the object can be drawn in the draw with a foreach loop
+        SpriteFont basicFont;
+        public static float currentTime = 0f;
+        int rounded;
+        // create a public list for the Fruit.cs so each instance of the object can be drawn in the draw with a foreach loop
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -50,16 +53,14 @@ namespace Evolutionary_Sim
         {
             circleTexture2D = Content.Load<Texture2D>("GreenCircle");
             spriteSheet = Content.Load<Texture2D>("Ev_TileSet");
+            basicFont = Content.Load<SpriteFont>("font");
             spriteBatch = new SpriteBatch(GraphicsDevice);
             Camera.WorldRectangle = new Rectangle(0, 0, 3600, 3600); // define border of camera for map
             Camera.ViewPortWidth = GraphicsDevice.Viewport.Width;
             Camera.ViewPortHeight = GraphicsDevice.Viewport.Height;
             getMap(spriteSheet); // initialise map
-            Agent.Initialize(spriteSheet, new Rectangle(16,48,18,18),1, new Vector2(300, 300));
-            Agent.Initialize(spriteSheet, new Rectangle(16, 48, 18, 18), 1, new Vector2(400, 300));
-            Agent.Initialize(spriteSheet, new Rectangle(16, 48, 18, 18), 1, new Vector2(500, 300));
-            Agent.Initialize(spriteSheet, new Rectangle(16, 48, 18, 18), 1, new Vector2(600, 300));
-
+            Agent.Initialize(spriteSheet, new Rectangle(16,48,18,18),1, new Vector2(64, 64));
+        
             // Bigger Continents, neighbouring squares needed to change, chance of a water tile
             //for (int x = 0; x < Map.mapFruitBushesX.Count; x++)
             //{
@@ -89,12 +90,16 @@ namespace Evolutionary_Sim
         }
         protected override void Draw(GameTime gameTime)
         {
+            currentTime += (float)gameTime.ElapsedGameTime.TotalSeconds;
+            rounded = (int)Math.Round(currentTime, 0);
             GraphicsDevice.Clear(Color.CornflowerBlue);
-
             spriteBatch.Begin();
             Map.Draw(spriteBatch, false);
             Agent.Draw(spriteBatch);
             ScreenTransition.Draw(spriteBatch, gameTime);
+            spriteBatch.DrawString(basicFont, "NEAT Simulation", new Vector2(10, 10), Color.White);
+            spriteBatch.DrawString(basicFont, "Game Time: " + rounded.ToString(), new Vector2(10, 30), Color.White);
+            spriteBatch.DrawString(basicFont, "Generation: 0", new Vector2(10, 50), Color.White);
             spriteBatch.End();
             base.Draw(gameTime);
         }
