@@ -134,3 +134,4 @@ D:\GitHub\Evolutionary-Simulator\Evolutionary Sim\Evolutionary Sim\Evolutionary 
 D:\GitHub\Evolutionary-Simulator\Evolutionary Sim\Evolutionary Sim\Evolutionary Sim\obj\x86\Debug\Evolutionary Sim.exe
 D:\GitHub\Evolutionary-Simulator\Evolutionary Sim\Evolutionary Sim\Evolutionary Sim\obj\x86\Debug\Evolutionary Sim.pdb
 D:\GitHub\Evolutionary-Simulator\Evolutionary Sim\Evolutionary Sim\Evolutionary Sim\bin\Windows\x86\Debug\Content\font.xnb
+C:\Users\monek\OneDrive\Documents\GitHub\Evolutionary-Simulator\Evolutionary Sim\Evolutionary Sim\Evolutionary Sim\bin\Windows\x86\Debug\Content\font.xnb

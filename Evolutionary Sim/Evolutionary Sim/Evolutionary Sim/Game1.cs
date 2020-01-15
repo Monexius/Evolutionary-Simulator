@@ -22,7 +22,7 @@ namespace Evolutionary_Sim
         Sprite sprite;
         MapFruit fruit;
         List<MapFruit> fruits;
-        Agent player;
+        Agent agent;
 
         SpriteFont basicFont;
         public static float currentTime = 0f;
@@ -42,6 +42,7 @@ namespace Evolutionary_Sim
             camera = new Camera();
             graphics.ApplyChanges();
             map = new Map();
+            agent = new Agent();
             fruits = new List<MapFruit>();
             keyboardManager = new KeyboardManager();
             screenTransition = new ScreenTransition();
@@ -59,7 +60,7 @@ namespace Evolutionary_Sim
             Camera.ViewPortWidth = GraphicsDevice.Viewport.Width;
             Camera.ViewPortHeight = GraphicsDevice.Viewport.Height;
             getMap(spriteSheet); // initialise map
-            Agent.Initialize(spriteSheet, new Rectangle(16,48,18,18),1, new Vector2(64, 64));
+            Agent.Initialize(spriteSheet, new Rectangle(16,48,18,18),1);
         
             // Bigger Continents, neighbouring squares needed to change, chance of a water tile
             //for (int x = 0; x < Map.mapFruitBushesX.Count; x++)
@@ -90,16 +91,38 @@ namespace Evolutionary_Sim
         }
         protected override void Draw(GameTime gameTime)
         {
+
+            Texture2D textur;
+            textur = new Texture2D(GraphicsDevice, 1, 1);
+            textur.SetData(new Color[] { Color.Black });
+
             currentTime += (float)gameTime.ElapsedGameTime.TotalSeconds;
             rounded = (int)Math.Round(currentTime, 0);
             GraphicsDevice.Clear(Color.CornflowerBlue);
             spriteBatch.Begin();
-            Map.Draw(spriteBatch, false);
+            Map.Draw(spriteBatch, false,textur);
             Agent.Draw(spriteBatch);
             ScreenTransition.Draw(spriteBatch, gameTime);
             spriteBatch.DrawString(basicFont, "NEAT Simulation", new Vector2(10, 10), Color.White);
             spriteBatch.DrawString(basicFont, "Game Time: " + rounded.ToString(), new Vector2(10, 30), Color.White);
             spriteBatch.DrawString(basicFont, "Generation: 0", new Vector2(10, 50), Color.White);
+            spriteBatch.DrawString(basicFont, "Current Tile ID: " + agent.CurrentTile.ToString(), new Vector2(10, 70), Color.White);
+            
+            spriteBatch.Draw(textur, new Rectangle(1501, 10, 48, 55), Color.White);
+
+
+            spriteBatch.DrawString(basicFont, Agent.getCloseTile(-1, -1).ToString(), new Vector2(1500, 10), Color.White); //Top-Left
+            spriteBatch.DrawString(basicFont, Agent.getCloseTile(0, -1).ToString(), new Vector2(1520, 10), Color.White); //Top
+            spriteBatch.DrawString(basicFont, Agent.getCloseTile(1, -1).ToString(), new Vector2(1540, 10), Color.White); //Top-Right
+
+            spriteBatch.DrawString(basicFont, Agent.getCloseTile(-1, 0).ToString(), new Vector2(1500, 30), Color.White); //Left
+            spriteBatch.DrawString(basicFont, Agent.getCloseTile(0, 0).ToString(), new Vector2(1520, 30), Color.White); //Center
+            spriteBatch.DrawString(basicFont, Agent.getCloseTile(1, 0).ToString(), new Vector2(1540, 30), Color.White); //Right
+
+            spriteBatch.DrawString(basicFont, Agent.getCloseTile(-1, 1).ToString(), new Vector2(1500, 50), Color.White); //Bottom-Left
+            spriteBatch.DrawString(basicFont, Agent.getCloseTile(0, 1).ToString(), new Vector2(1520, 50), Color.White); //Bottom
+            spriteBatch.DrawString(basicFont, Agent.getCloseTile(1, 1).ToString(), new Vector2(1540, 50), Color.White); //Bottom-Right
+
             spriteBatch.End();
             base.Draw(gameTime);
         }

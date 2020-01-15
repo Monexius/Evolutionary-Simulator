@@ -13,6 +13,7 @@ namespace Evolutionary_Sim
     class KeyboardManager
     {
         Map map;
+        Agent agent;
         int lastScrollState;
         
         MouseState lastMouseState = new MouseState();
@@ -52,10 +53,12 @@ namespace Evolutionary_Sim
                 map = new Map();
                 Map.Initialize(spriteSheet, 2, 4, 33);
                 Game1.currentTime = 0f;
+                agent = new Agent();
+                Agent.Initialize(spriteSheet, new Rectangle(16, 48, 18, 18), 1);
                
                 //Map.Draw(spriteBatch);
                 //Tiles,Smoothness of caves, tiles needed, Chance to spawn
-        
+
                 ScreenTransition.RunAnimation();
             }
             if (keyboardState.IsKeyDown(Keys.W) && lastKeyboardState.IsKeyUp(Keys.W))

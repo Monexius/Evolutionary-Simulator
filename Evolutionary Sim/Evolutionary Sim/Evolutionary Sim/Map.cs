@@ -28,9 +28,9 @@ namespace Map_Animations
 
         public static Dictionary<int, Rectangle> tiles = new Dictionary<int, Rectangle>();
 
-        static private int[,] mapSquares = new int[MapWidth, MapHeight]; // total amount of squares
-        static private int[,] layer2 = new int[MapWidth, MapHeight]; // total amount of squares
-        static private int[,] layer3 = new int[MapWidth, MapHeight]; // total amount of squares
+        static public int[,] mapSquares = new int[MapWidth, MapHeight]; // total amount of squares
+        static public int[,] layer2 = new int[MapWidth, MapHeight]; // total amount of squares
+        static public int[,] layer3 = new int[MapWidth, MapHeight]; // total amount of squares
 
         public static ArrayList mapFruitBushesX = new ArrayList();
         public static ArrayList mapFruitBushesY = new ArrayList();
@@ -204,7 +204,7 @@ namespace Map_Animations
         #endregion
 
         #region Drawing
-        static public void Draw(SpriteBatch spriteBatch, bool repeat)
+        static public void Draw(SpriteBatch spriteBatch, bool repeat, Texture2D textur)
         {
             int startX = GetSquareByPixelX((int)Camera.Position.X); // decides how many squares should be drawn
             int endX = GetSquareByPixelX((int)Camera.Position.X + Camera.ViewPortWidth);
@@ -240,6 +240,15 @@ namespace Map_Animations
                     {
                         spriteBatch.Draw(texture, SquareScreenRectangle(x, y), tiles[GetTileAtSquare(x, y, layer3)], Color.White); // get square gets the position in which to draw
                     }
+                }
+            }
+            spriteBatch.Draw(textur, new Rectangle(1396, 7, 56, 55), Color.White);
+            int[,] surroundingTiles = Agent.GetSurroundingTiles();
+            for (int x = 0; x < 3; x++)
+            { //surroundingTiles[x, y]
+                for (int y = 0; y < 3; y++)
+                {
+                    spriteBatch.Draw(texture, new Rectangle(1400 + (16 * x),10 + (16 * y),16,16), tiles[surroundingTiles[x,y]], Color.White);
                 }
             }
         }
