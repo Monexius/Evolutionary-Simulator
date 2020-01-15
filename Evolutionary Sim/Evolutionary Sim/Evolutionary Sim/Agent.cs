@@ -12,6 +12,9 @@ namespace Evolutionary_Sim
     class Agent
     {
         public static Sprite BaseSprite;
+        private int xPosition;
+        private int yPosition;
+
         public static void Initialize(Texture2D texture, Rectangle baseInitialFrame, int baseFrameCount, Vector2 worldLoaction)
         {
             int frameWidth = baseInitialFrame.Width;
@@ -27,6 +30,7 @@ namespace Evolutionary_Sim
         {
 
         }
+
         public static void moveDown()
         {
 
