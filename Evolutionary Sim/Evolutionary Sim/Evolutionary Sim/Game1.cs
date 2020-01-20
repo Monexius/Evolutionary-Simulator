@@ -109,12 +109,12 @@ namespace Evolutionary_Sim
 
             spriteBatch.Draw(textur, new Rectangle(1501, 10, 48, 55), Color.White);
 
+            spriteBatch.Draw(textur, new Rectangle((screenWidth - 400), (screenHeight - 125), 86, 20), Color.White);
+            spriteBatch.DrawString(basicFont, "Layer 3", new Vector2((screenWidth - 395), (screenHeight - 123)), Color.White);
             spriteBatch.Draw(textur, new Rectangle((screenWidth - 300), (screenHeight - 125), 86, 20), Color.White);
-            spriteBatch.DrawString(basicFont, "Layer 3", new Vector2((screenWidth - 295), (screenHeight - 123)), Color.White);
-            spriteBatch.Draw(textur, new Rectangle((screenWidth - 200), (screenHeight - 125), 86, 20), Color.White);
-            spriteBatch.DrawString(basicFont, "Layer 2", new Vector2((screenWidth - 195), (screenHeight - 123)), Color.White);
-            spriteBatch.Draw(textur, new Rectangle((screenWidth - 100), (screenHeight - 125), 86, 20), Color.White);
-            spriteBatch.DrawString(basicFont, "Layer 1", new Vector2((screenWidth - 95), (screenHeight - 123)), Color.White);
+            spriteBatch.DrawString(basicFont, "Layer 2", new Vector2((screenWidth - 295), (screenHeight - 123)), Color.White);
+            spriteBatch.Draw(textur, new Rectangle((screenWidth - 200), (screenHeight - 225), 86, 20), Color.White);
+            spriteBatch.DrawString(basicFont, "Layer 1", new Vector2((screenWidth - 195), (screenHeight - 223)), Color.White);
 
             spriteBatch.DrawString(basicFont, Agent.getCloseTile(-1, -1, 1).ToString(), new Vector2(1500, 10), Color.White); //Top-Left
             spriteBatch.DrawString(basicFont, Agent.getCloseTile(0, -1, 1).ToString(), new Vector2(1520, 10), Color.White); //Top

@@ -23,7 +23,7 @@ namespace Evolutionary_Sim
         static public int rounded;
         public static Texture2D graphics;
         public static int i = 0;
-        public static int TIMER = 1;
+        public static float TIMER = 0.5f;
         public static int time = 0;
         Map map;
         Sprite sprite;

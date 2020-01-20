@@ -245,20 +245,20 @@ namespace Map_Animations
                 }
             }
 
-            spriteBatch.Draw(textur, new Rectangle(Game1.screenWidth - 101, Game1.screenHeight - 100, 87, 88), Color.White);
+            spriteBatch.Draw(textur, new Rectangle(Game1.screenWidth - 201, Game1.screenHeight - 200, 167, 168), Color.White);
             int[,] surroundingTiles = Agent.GetSurroundingTiles();
-            spriteBatch.Draw(textur, new Rectangle(Game1.screenWidth - 201, Game1.screenHeight - 100, 87, 88), Color.White);
-            int[,] surroundingObjects = Agent.GetSurroundingObjects();
             spriteBatch.Draw(textur, new Rectangle(Game1.screenWidth - 301, Game1.screenHeight - 100, 87, 88), Color.White);
+            int[,] surroundingObjects = Agent.GetSurroundingObjects();
+            spriteBatch.Draw(textur, new Rectangle(Game1.screenWidth - 401, Game1.screenHeight - 100, 87, 88), Color.White);
             int[,] surroundingItems = Agent.GetSurroundingItems();
 
             for (int x = 0; x < 5; x++)
             { //surroundingTiles[x, y]
                 for (int y = 0; y < 5; y++)
                 {
-                    spriteBatch.Draw(texture, new Rectangle((Game1.screenWidth - 98) + (16 * x), (Game1.screenHeight - 95) + (16 * y),16,16), tiles[surroundingTiles[y,x]], Color.White);
-                    spriteBatch.Draw(texture, new Rectangle((Game1.screenWidth - 98) + (16 * x), (Game1.screenHeight - 95) + (16 * y), 16, 16), tiles[surroundingObjects[y, x]], Color.White);
-                    spriteBatch.Draw(texture, new Rectangle((Game1.screenWidth - 98) + (16 * x), (Game1.screenHeight - 95) + (16 * y), 16, 16), tiles[surroundingItems[y, x]], Color.White);
+                    spriteBatch.Draw(texture, new Rectangle((Game1.screenWidth - 198) + (32 * x), (Game1.screenHeight - 195) + (32 * y),32,32), tiles[surroundingTiles[y,x]], Color.White);
+                    spriteBatch.Draw(texture, new Rectangle((Game1.screenWidth - 198) + (32 * x), (Game1.screenHeight - 195) + (32 * y), 32, 32), tiles[surroundingObjects[y, x]], Color.White);
+                    spriteBatch.Draw(texture, new Rectangle((Game1.screenWidth - 198) + (32 * x), (Game1.screenHeight - 195) + (32 * y), 32, 32), tiles[surroundingItems[y, x]], Color.White);
                 }
             }
             
@@ -266,8 +266,8 @@ namespace Map_Animations
             { //surroundingTiles[x, y]
                 for (int y = 0; y < 5; y++)
                 {
-                    spriteBatch.Draw(texture, new Rectangle((Game1.screenWidth - 198) + (16 * x), (Game1.screenHeight - 95) + (16 * y), 16, 16), tiles[surroundingObjects[y, x]], Color.White);
-                    spriteBatch.Draw(texture, new Rectangle((Game1.screenWidth - 198) + (16 * x), (Game1.screenHeight - 95) + (16 * y), 16, 16), tiles[surroundingItems[y, x]], Color.White);
+                    spriteBatch.Draw(texture, new Rectangle((Game1.screenWidth - 298) + (16 * x), (Game1.screenHeight - 95) + (16 * y), 16, 16), tiles[surroundingObjects[y, x]], Color.White);
+                    spriteBatch.Draw(texture, new Rectangle((Game1.screenWidth - 298) + (16 * x), (Game1.screenHeight - 95) + (16 * y), 16, 16), tiles[surroundingItems[y, x]], Color.White);
                 }
             }
            
@@ -275,7 +275,7 @@ namespace Map_Animations
             { //surroundingTiles[x, y]
                 for (int y = 0; y < 5; y++)
                 {
-                    spriteBatch.Draw(texture, new Rectangle((Game1.screenWidth - 298) + (16 * x), (Game1.screenHeight - 95) + (16 * y), 16, 16), tiles[surroundingItems[y, x]], Color.White);
+                    spriteBatch.Draw(texture, new Rectangle((Game1.screenWidth - 398) + (16 * x), (Game1.screenHeight - 95) + (16 * y), 16, 16), tiles[surroundingItems[y, x]], Color.White);
                 }
             }
         }
