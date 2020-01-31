@@ -136,3 +136,29 @@ D:\GitHub\Evolutionary-Simulator\Evolutionary Sim\Evolutionary Sim\Evolutionary 
 D:\GitHub\Evolutionary-Simulator\Evolutionary Sim\Evolutionary Sim\Evolutionary Sim\bin\Windows\x86\Debug\Content\font.xnb
 C:\Users\monek\OneDrive\Documents\GitHub\Evolutionary-Simulator\Evolutionary Sim\Evolutionary Sim\Evolutionary Sim\bin\Windows\x86\Debug\Content\font.xnb
 D:\GitHub\Evolutionary-Simulator\Evolutionary Sim\Evolutionary Sim\Evolutionary Sim\bin\Windows\x86\Debug\Content\Content\font.xnb
+C:\GitHub\Evolutionary-Simulator\Evolutionary Sim\Evolutionary Sim\Evolutionary Sim\obj\x86\Debug\Evolutionary Sim.csprojAssemblyReference.cache
+C:\GitHub\Evolutionary-Simulator\Evolutionary Sim\Evolutionary Sim\Evolutionary Sim\obj\x86\Debug\Evolutionary Sim.csproj.CoreCompileInputs.cache
+C:\GitHub\Evolutionary-Simulator\Evolutionary Sim\Evolutionary Sim\Evolutionary Sim\obj\x86\Debug\Evolutionary Sim.exe
+C:\GitHub\Evolutionary-Simulator\Evolutionary Sim\Evolutionary Sim\Evolutionary Sim\obj\x86\Debug\Evolutionary Sim.pdb
+C:\GitHub\Evolutionary-Simulator\Evolutionary Sim\Evolutionary Sim\Evolutionary Sim\bin\Windows\x86\Debug\Content\Ev_TileSet.xnb
+C:\GitHub\Evolutionary-Simulator\Evolutionary Sim\Evolutionary Sim\Evolutionary Sim\bin\Windows\x86\Debug\Content\font.xnb
+C:\GitHub\Evolutionary-Simulator\Evolutionary Sim\Evolutionary Sim\Evolutionary Sim\bin\Windows\x86\Debug\Content\GreenCircle.xnb
+C:\GitHub\Evolutionary-Simulator\Evolutionary Sim\Evolutionary Sim\Evolutionary Sim\bin\Windows\x86\Debug\Evolutionary Sim.exe
+C:\GitHub\Evolutionary-Simulator\Evolutionary Sim\Evolutionary Sim\Evolutionary Sim\bin\Windows\x86\Debug\Evolutionary Sim.pdb
+C:\GitHub\Evolutionary-Simulator\Evolutionary Sim\Evolutionary Sim\Evolutionary Sim\bin\Windows\x86\Debug\MonoGame.Framework.dll
+C:\GitHub\Evolutionary-Simulator\Evolutionary Sim\Evolutionary Sim\Evolutionary Sim\bin\Windows\x86\Debug\SharpDX.MediaFoundation.dll
+C:\GitHub\Evolutionary-Simulator\Evolutionary Sim\Evolutionary Sim\Evolutionary Sim\bin\Windows\x86\Debug\SharpDX.dll
+C:\GitHub\Evolutionary-Simulator\Evolutionary Sim\Evolutionary Sim\Evolutionary Sim\bin\Windows\x86\Debug\SharpDX.XAudio2.dll
+C:\GitHub\Evolutionary-Simulator\Evolutionary Sim\Evolutionary Sim\Evolutionary Sim\bin\Windows\x86\Debug\SharpDX.DXGI.dll
+C:\GitHub\Evolutionary-Simulator\Evolutionary Sim\Evolutionary Sim\Evolutionary Sim\bin\Windows\x86\Debug\SharpDX.Direct3D11.dll
+C:\GitHub\Evolutionary-Simulator\Evolutionary Sim\Evolutionary Sim\Evolutionary Sim\bin\Windows\x86\Debug\SharpDX.Direct2D1.dll
+C:\GitHub\Evolutionary-Simulator\Evolutionary Sim\Evolutionary Sim\Evolutionary Sim\bin\Windows\x86\Debug\SharpDX.XInput.dll
+C:\GitHub\Evolutionary-Simulator\Evolutionary Sim\Evolutionary Sim\Evolutionary Sim\bin\Windows\x86\Debug\MonoGame.Framework.xml
+C:\GitHub\Evolutionary-Simulator\Evolutionary Sim\Evolutionary Sim\Evolutionary Sim\bin\Windows\x86\Debug\SharpDX.MediaFoundation.xml
+C:\GitHub\Evolutionary-Simulator\Evolutionary Sim\Evolutionary Sim\Evolutionary Sim\bin\Windows\x86\Debug\SharpDX.xml
+C:\GitHub\Evolutionary-Simulator\Evolutionary Sim\Evolutionary Sim\Evolutionary Sim\bin\Windows\x86\Debug\SharpDX.XAudio2.xml
+C:\GitHub\Evolutionary-Simulator\Evolutionary Sim\Evolutionary Sim\Evolutionary Sim\bin\Windows\x86\Debug\SharpDX.DXGI.xml
+C:\GitHub\Evolutionary-Simulator\Evolutionary Sim\Evolutionary Sim\Evolutionary Sim\bin\Windows\x86\Debug\SharpDX.Direct3D11.xml
+C:\GitHub\Evolutionary-Simulator\Evolutionary Sim\Evolutionary Sim\Evolutionary Sim\bin\Windows\x86\Debug\SharpDX.Direct2D1.xml
+C:\GitHub\Evolutionary-Simulator\Evolutionary Sim\Evolutionary Sim\Evolutionary Sim\bin\Windows\x86\Debug\SharpDX.XInput.xml
+C:\GitHub\Evolutionary-Simulator\Evolutionary Sim\Evolutionary Sim\Evolutionary Sim\obj\x86\Debug\Evolutionary Sim.csproj.CopyComplete

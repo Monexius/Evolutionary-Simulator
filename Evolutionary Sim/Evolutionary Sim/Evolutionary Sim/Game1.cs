@@ -51,6 +51,7 @@ namespace Evolutionary_Sim
             screenTransition = new ScreenTransition();
 
             base.Initialize();
+
         }
 
         protected override void LoadContent()

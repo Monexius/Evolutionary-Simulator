@@ -4,9 +4,9 @@
   <Platform>Windows</Platform>
   <Config />
   <SourceFiles>
-    <File>C:/Users/monek/OneDrive/Documents/GitHub/Evolutionary-Simulator/Evolutionary Sim/Evolutionary Sim/Evolutionary Sim/Content/Ev_TileSet.png</File>
-    <File>C:/Users/monek/OneDrive/Documents/GitHub/Evolutionary-Simulator/Evolutionary Sim/Evolutionary Sim/Evolutionary Sim/Content/GreenCircle.png</File>
-    <File>C:/Users/monek/OneDrive/Documents/GitHub/Evolutionary-Simulator/Evolutionary Sim/Evolutionary Sim/Evolutionary Sim/Content/font.spritefont</File>
+    <File>C:/GitHub/Evolutionary-Simulator/Evolutionary Sim/Evolutionary Sim/Evolutionary Sim/Content/Ev_TileSet.png</File>
+    <File>C:/GitHub/Evolutionary-Simulator/Evolutionary Sim/Evolutionary Sim/Evolutionary Sim/Content/GreenCircle.png</File>
+    <File>C:/GitHub/Evolutionary-Simulator/Evolutionary Sim/Evolutionary Sim/Evolutionary Sim/Content/font.spritefont</File>
   </SourceFiles>
   <DestFiles>
     <File xsi:nil="true" />
