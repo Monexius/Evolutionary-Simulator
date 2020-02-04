@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <SourceFile>D:/GitHub/Evolutionary-Simulator/Evolutionary Sim/Evolutionary Sim/Evolutionary Sim/Content/Ev_TileSet.png</SourceFile>
-  <SourceTime>2020-01-15T15:03:28.3895285+00:00</SourceTime>
+  <SourceTime>2020-01-31T15:44:48.3530182+00:00</SourceTime>
   <DestFile>D:/GitHub/Evolutionary-Simulator/Evolutionary Sim/Evolutionary Sim/Evolutionary Sim/Content/bin/Windows/Ev_TileSet.xnb</DestFile>
-  <DestTime>2020-01-15T15:04:09.4508771+00:00</DestTime>
+  <DestTime>2020-01-31T15:45:54.6108079+00:00</DestTime>
   <Importer>TextureImporter</Importer>
   <ImporterTime>2017-03-01T15:05:36+00:00</ImporterTime>
   <Processor>TextureProcessor</Processor>

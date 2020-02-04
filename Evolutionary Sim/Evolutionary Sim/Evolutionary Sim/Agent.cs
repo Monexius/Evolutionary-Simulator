@@ -9,11 +9,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using SharpNeat.Core;
+using SharpNeat.EvolutionAlgorithms;
+using SharpNeat.Genomes.Neat;
+using SharpNeat.Phenomes;
+
 namespace Evolutionary_Sim
 {
     class Agent
     {
-        public static Sprite BaseSprite;
+        private static Sprite baseSprite;
         static private int xPosition;
         static private int yPosition;
         static private Random rnd = new Random();
@@ -25,10 +30,17 @@ namespace Evolutionary_Sim
         public static int i = 0;
         public static float TIMER = 0.5f;
         public static int time = 0;
+        private static IBlackBox brain;
+        private int fruitTotal;
         Map map;
         Sprite sprite;
+        HealthBar health;
+        Game1 game1;
 
-        public static void Initialize(Texture2D texture, Rectangle baseInitialFrame, int baseFrameCount)
+        // NEAT Algorithm
+        public static IBlackBox Brain { get; set; }
+
+        public void Initialize(Texture2D texture, Texture2D healthTexture, Rectangle baseInitialFrame, int baseFrameCount)
         {
             int frameWidth = baseInitialFrame.Width;
             int frameHeight = baseInitialFrame.Height;
@@ -40,9 +52,16 @@ namespace Evolutionary_Sim
             BaseSprite.BoundingYPadding = 4;
             BaseSprite.AnimateWhenStopped = false;
             getcurrentTile();
+            health = new HealthBar();
+            game1 = new Game1();
+
+        }
+        public void InitializeBrain(IBlackBox brain)
+        {
+            Brain = brain;
         }
 
-        public static int getcurrentTile()
+        public int getcurrentTile()
         {
             return currentTile = Map.GetTileAtPixel(xPosition, yPosition, Map.mapSquares);
         }
@@ -175,7 +194,31 @@ namespace Evolutionary_Sim
             return matrix;
         }
 
+        public static int[,] GetThreeByThree()
+        {
+            int[,] matrix = new int[3, 3];
+
+            matrix[0, 0] = getCloseTile(-1, -1, 1);
+            matrix[0, 1] = getCloseTile(0, -1, 1);
+            matrix[0, 2] = getCloseTile(1, -1, 1);
+
+            matrix[1, 0] = getCloseTile(-1, 0, 1);
+            matrix[1, 1] = 100;
+            matrix[1, 2] = getCloseTile(1, 0, 1);
+
+            matrix[2, 0] = getCloseTile(-1, 1, 1);
+            matrix[2, 1] = getCloseTile(0, 1, 1);
+            matrix[2, 2] = getCloseTile(1, 1, 1);
+
+            return matrix;
+        }
+
         #region Movement
+        public void eatFruit()
+        {
+            fruitTotal++;
+        }
+
         public void moveUp()
         {
             yPosition = yPosition - 16;
@@ -208,6 +251,18 @@ namespace Evolutionary_Sim
             rounded = (int)Math.Round(currentTime, 0);
             if (currentTime >= TIMER)
             {
+                if (HealthBar.GetHealth() > 0)
+                {
+                    health.RemoveHealth(5);
+                }
+                else
+                {
+                    Map.ClearArray();
+                    map = new Map();
+                    game1.getMap(graphics); // initialise map
+                    health.AddHealth(100);
+                }
+                //GetMove(GetThreeByThree());
                 Debug.WriteLine(i++);
 
                 switch (rnd.Next(4))
@@ -223,6 +278,7 @@ namespace Evolutionary_Sim
                     case 2:
                         moveLeft();
                         break;
+
                     case 3:
                         moveRight();
                         break;
@@ -231,12 +287,71 @@ namespace Evolutionary_Sim
             }
             BaseSprite.Update(gameTime);
         }
-        public static void Draw(SpriteBatch spriteBatch)
+       
+        public int GetTimeSurvived()
         {
-            BaseSprite.Draw(spriteBatch);
-
+            return rounded;
         }
 
+        public int GetFruitTotal()
+        {
+            return fruitTotal;
+        }
+
+        public int[,] GetMove(int[,] board)
+        { 
+            // Clear the network
+            Brain.ResetState();
+
+            // Convert the game board into an input array for the network
+            setInputSignalArray(Brain.InputSignalArray, board);
+
+            // Activate the network
+            Brain.Activate();
+
+            int[,] move = null;
+            double max = double.MinValue;
+
+            for (int i = 0; i < 5; i++)
+            {
+                for (int j = 0; j < 5; j++)
+                {
+                    //if the square is water, ignore it #1
+
+
+                    // Set the score for this square.
+                    double score = Brain.OutputSignalArray[i * 3 + j];
+
+                    //If he lives after the first move, call it current best.
+                    if (move == null)
+                    {
+                        max = score;
+                    }
+                }
+            }
+            return move; 
+        }
+
+        private void setInputSignalArray(ISignalArray inputArr, int[,] board)
+        {
+
+            for (int y = 0; i < 25; i++)
+            {
+                for (int x = 0; x < 5; x++)
+                {
+                    for (int i = 0; y < 5; y++)
+                    {
+                        inputArr[i] = board[x, y];
+                    }
+                }
+            }
+        }
+
+        public static void Draw(SpriteBatch spriteBatch, SpriteFont basicFont)
+        {
+            BaseSprite.Draw(spriteBatch);
+            spriteBatch.DrawString(basicFont, "Health: " + HealthBar.GetHealth(), new Vector2(300, 10), Color.White);
+        }
         #region Getters and Setters
 
         public int CurrentTile
@@ -244,6 +359,8 @@ namespace Evolutionary_Sim
             get { return currentTile; }
             set { currentTile = value; }
         }
+
+        internal static Sprite BaseSprite { get => baseSprite; set => baseSprite = value; }
         #endregion
     }
 }

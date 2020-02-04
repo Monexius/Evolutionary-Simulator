@@ -162,3 +162,12 @@ C:\GitHub\Evolutionary-Simulator\Evolutionary Sim\Evolutionary Sim\Evolutionary 
 C:\GitHub\Evolutionary-Simulator\Evolutionary Sim\Evolutionary Sim\Evolutionary Sim\bin\Windows\x86\Debug\SharpDX.Direct2D1.xml
 C:\GitHub\Evolutionary-Simulator\Evolutionary Sim\Evolutionary Sim\Evolutionary Sim\bin\Windows\x86\Debug\SharpDX.XInput.xml
 C:\GitHub\Evolutionary-Simulator\Evolutionary Sim\Evolutionary Sim\Evolutionary Sim\obj\x86\Debug\Evolutionary Sim.csproj.CopyComplete
+D:\GitHub\Evolutionary-Simulator\Evolutionary Sim\Evolutionary Sim\Evolutionary Sim\obj\x86\Debug\Evolutionary_Sim.Properties.Resources.resources
+D:\GitHub\Evolutionary-Simulator\Evolutionary Sim\Evolutionary Sim\Evolutionary Sim\obj\x86\Debug\Evolutionary Sim.csproj.GenerateResource.cache
+D:\GitHub\Evolutionary-Simulator\Evolutionary Sim\Evolutionary Sim\Evolutionary Sim\bin\Windows\x86\Debug\Content\healthBar.xnb
+D:\GitHub\Evolutionary-Simulator\Evolutionary Sim\Evolutionary Sim\Evolutionary Sim\bin\Windows\x86\Debug\log4net.dll
+D:\GitHub\Evolutionary-Simulator\Evolutionary Sim\Evolutionary Sim\Evolutionary Sim\bin\Windows\x86\Debug\SharpNeatDomains.dll
+D:\GitHub\Evolutionary-Simulator\Evolutionary Sim\Evolutionary Sim\Evolutionary Sim\bin\Windows\x86\Debug\SharpNeatLib.dll
+D:\GitHub\Evolutionary-Simulator\Evolutionary Sim\Evolutionary Sim\Evolutionary Sim\bin\Windows\x86\Debug\log4net.xml
+D:\GitHub\Evolutionary-Simulator\Evolutionary Sim\Evolutionary Sim\Evolutionary Sim\bin\Windows\x86\Debug\SharpNeatLib.pdb
+D:\GitHub\Evolutionary-Simulator\Evolutionary Sim\Evolutionary Sim\Evolutionary Sim\bin\Windows\x86\Debug\SharpNeatLib.xml
