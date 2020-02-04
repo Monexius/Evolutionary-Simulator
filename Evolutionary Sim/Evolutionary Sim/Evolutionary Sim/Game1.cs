@@ -15,6 +15,7 @@ namespace Evolutionary_Sim
         SpriteBatch spriteBatch;
         Texture2D spriteSheet;
         Texture2D circleTexture2D;
+        Texture2D healthTexture;
         ScreenTransition screenTransition;
         KeyboardManager keyboardManager;
         Map map;
@@ -23,12 +24,15 @@ namespace Evolutionary_Sim
         MapFruit fruit;
         List<MapFruit> fruits;
         Agent agent;
-        
+        HealthBar healthBar;
         SpriteFont basicFont;
+
         public static float currentTime = 0f;
         public static int screenHeight = 800;
         public static int screenWidth = 1600;
-        int rounded;
+        public int rounded;
+        public int hp = 100;
+
         // create a public list for the Fruit.cs so each instance of the object can be drawn in the draw with a foreach loop
         public Game1()
         {
@@ -45,11 +49,11 @@ namespace Evolutionary_Sim
             camera = new Camera();
             graphics.ApplyChanges();
             map = new Map();
-            agent = new Agent();
             fruits = new List<MapFruit>();
             keyboardManager = new KeyboardManager();
             screenTransition = new ScreenTransition();
-
+            agent = new Agent();
+            healthBar = new HealthBar();
             base.Initialize();
 
         }
@@ -59,13 +63,15 @@ namespace Evolutionary_Sim
             circleTexture2D = Content.Load<Texture2D>("GreenCircle");
             spriteSheet = Content.Load<Texture2D>("Ev_TileSet");
             basicFont = Content.Load<SpriteFont>("font");
+            healthTexture = Content.Load<Texture2D>("healthBar");
+
             spriteBatch = new SpriteBatch(GraphicsDevice);
             Camera.WorldRectangle = new Rectangle(0, 0, 3600, 3600); // define border of camera for map
             Camera.ViewPortWidth = GraphicsDevice.Viewport.Width;
             Camera.ViewPortHeight = GraphicsDevice.Viewport.Height;
             getMap(spriteSheet); // initialise map
-            Agent.Initialize(spriteSheet, new Rectangle(16,48,18,18),1);
-        
+            agent.Initialize(spriteSheet, healthTexture, new Rectangle(16, 48, 18, 18), 1);
+            healthBar.Initialize(healthTexture, new Vector2(390, 10), new Rectangle(0, 0, hp, healthTexture.Height + 5), hp);
             // Bigger Continents, neighbouring squares needed to change, chance of a water tile
             //for (int x = 0; x < Map.mapFruitBushesX.Count; x++)
             //{
@@ -87,7 +93,7 @@ namespace Evolutionary_Sim
         protected override void Update(GameTime gameTime)
         {
             agent.Update(gameTime);
-            keyboardManager.HandleInput(gameTime, spriteSheet);
+            keyboardManager.HandleInput(gameTime, spriteSheet, healthTexture);
             base.Update(gameTime);
         }
         public void getMap(Texture2D spriteSheet)
@@ -106,7 +112,7 @@ namespace Evolutionary_Sim
             GraphicsDevice.Clear(Color.CornflowerBlue);
             spriteBatch.Begin();
             Map.Draw(spriteBatch, false,textur);
-            Agent.Draw(spriteBatch);
+            Agent.Draw(spriteBatch, basicFont);
 
             spriteBatch.Draw(textur, new Rectangle(1501, 10, 48, 55), Color.White);
 
@@ -130,6 +136,8 @@ namespace Evolutionary_Sim
             spriteBatch.DrawString(basicFont, Agent.getCloseTile(1, 1, 1).ToString(), new Vector2(1540, 50), Color.White); //Bottom-Right
 
             ScreenTransition.Draw(spriteBatch, gameTime);
+            HealthBar.Draw(spriteBatch);
+
             spriteBatch.DrawString(basicFont, "NEAT Simulation", new Vector2(10, 10), Color.White);
             spriteBatch.DrawString(basicFont, "Game Time: " + rounded.ToString(), new Vector2(10, 30), Color.White);
             spriteBatch.DrawString(basicFont, "Generation: 0", new Vector2(10, 50), Color.White);

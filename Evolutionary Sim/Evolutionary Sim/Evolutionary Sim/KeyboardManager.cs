@@ -19,7 +19,7 @@ namespace Evolutionary_Sim
         MouseState lastMouseState = new MouseState();
         KeyboardState lastKeyboardState = new KeyboardState();
 
-        public void HandleInput(GameTime gameTime, Texture2D spriteSheet )
+        public void HandleInput(GameTime gameTime, Texture2D spriteSheet , Texture2D healthTexture)
         {
             MouseState scrollState = Mouse.GetState();
             MouseState mouseState = Mouse.GetState();
@@ -53,9 +53,9 @@ namespace Evolutionary_Sim
                 map = new Map();
                 Map.Initialize(spriteSheet, 2, 4, 33);
                 Game1.currentTime = 0f;
-                agent = new Agent();
-                Agent.Initialize(spriteSheet, new Rectangle(16, 48, 18, 18), 1);
-               
+                agent.Initialize(spriteSheet, healthTexture, new Rectangle(16, 48, 18, 18), 1);
+
+
                 //Map.Draw(spriteBatch);
                 //Tiles,Smoothness of caves, tiles needed, Chance to spawn
 
