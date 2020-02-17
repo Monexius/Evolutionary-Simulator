@@ -7,8 +7,10 @@
     <File>C:/GitHub/Evolutionary-Simulator/Evolutionary Sim/Evolutionary Sim/Evolutionary Sim/Content/Ev_TileSet.png</File>
     <File>C:/GitHub/Evolutionary-Simulator/Evolutionary Sim/Evolutionary Sim/Evolutionary Sim/Content/GreenCircle.png</File>
     <File>C:/GitHub/Evolutionary-Simulator/Evolutionary Sim/Evolutionary Sim/Evolutionary Sim/Content/font.spritefont</File>
+    <File>C:/GitHub/Evolutionary-Simulator/Evolutionary Sim/Evolutionary Sim/Evolutionary Sim/Content/healthBar.png</File>
   </SourceFiles>
   <DestFiles>
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
