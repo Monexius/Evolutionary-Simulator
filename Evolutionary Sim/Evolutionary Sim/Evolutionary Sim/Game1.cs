@@ -31,7 +31,7 @@ namespace Evolutionary_Sim
         public static int screenHeight = 800;
         public static int screenWidth = 1600;
         public int rounded;
-        public int hp = 100;
+        public int hp = 1000;
 
         // create a public list for the Fruit.cs so each instance of the object can be drawn in the draw with a foreach loop
         public Game1()
@@ -71,7 +71,7 @@ namespace Evolutionary_Sim
             Camera.ViewPortHeight = GraphicsDevice.Viewport.Height;
             getMap(spriteSheet); // initialise map
             agent.Initialize(spriteSheet, healthTexture, new Rectangle(16, 48, 18, 18), 1);
-            healthBar.Initialize(healthTexture, new Vector2(390, 10), new Rectangle(0, 0, hp, healthTexture.Height + 5), hp);
+            healthBar.Initialize(healthTexture, new Vector2(390, 10), new Rectangle(0, 0, hp, healthTexture.Height + 3), hp);
             // Bigger Continents, neighbouring squares needed to change, chance of a water tile
             //for (int x = 0; x < Map.mapFruitBushesX.Count; x++)
             //{
@@ -92,8 +92,8 @@ namespace Evolutionary_Sim
         
         protected override void Update(GameTime gameTime)
         {
-            agent.Update(gameTime);
             keyboardManager.HandleInput(gameTime, spriteSheet, healthTexture);
+            agent.Update(gameTime);
             base.Update(gameTime);
         }
         public void getMap(Texture2D spriteSheet)

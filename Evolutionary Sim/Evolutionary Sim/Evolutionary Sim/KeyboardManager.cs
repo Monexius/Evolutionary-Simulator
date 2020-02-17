@@ -14,6 +14,8 @@ namespace Evolutionary_Sim
     {
         Map map;
         Agent agent;
+        Game1 game1;
+        HealthBar health;
         int lastScrollState;
         
         MouseState lastMouseState = new MouseState();
@@ -51,10 +53,11 @@ namespace Evolutionary_Sim
             {
                 Map.ClearArray();
                 map = new Map();
-                Map.Initialize(spriteSheet, 2, 4, 33);
-                Game1.currentTime = 0f;
-                agent.Initialize(spriteSheet, healthTexture, new Rectangle(16, 48, 18, 18), 1);
 
+                game1.getMap(spriteSheet); // initialise map
+                //health.AddHealth(game1.hp);
+                //Game1.currentTime = 0f;
+                //agent.Initialize(spriteSheet, healthTexture, new Rectangle(16, 48, 18, 18), 1);
 
                 //Map.Draw(spriteBatch);
                 //Tiles,Smoothness of caves, tiles needed, Chance to spawn

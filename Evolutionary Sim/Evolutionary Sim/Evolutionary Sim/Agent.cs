@@ -32,6 +32,8 @@ namespace Evolutionary_Sim
         public static int time = 0;
         private static IBlackBox brain;
         private int fruitTotal;
+        public static int skipFrameCounter;
+
         Map map;
         Sprite sprite;
         HealthBar health;
@@ -44,8 +46,7 @@ namespace Evolutionary_Sim
         {
             int frameWidth = baseInitialFrame.Width;
             int frameHeight = baseInitialFrame.Height;
-            xPosition = rnd.Next(0, 99) * 16;
-            yPosition = rnd.Next(0, 99) * 16;
+            spawn();
             graphics = texture;
             BaseSprite = new Sprite(new Vector2(xPosition, yPosition), texture, baseInitialFrame);
             BaseSprite.BoundingXPadding = 4;
@@ -59,6 +60,16 @@ namespace Evolutionary_Sim
         public void InitializeBrain(IBlackBox brain)
         {
             Brain = brain;
+        }
+
+        public void spawn()
+        {
+            xPosition = rnd.Next(0, Map.MapWidth) * 16;
+            yPosition = rnd.Next(0, Map.MapHeight) * 16;
+
+            if (Map.GetTileAtPixel(xPosition, yPosition, Map.mapSquares  ) != 1){
+                spawn();
+            }
         }
 
         public int getcurrentTile()
@@ -194,21 +205,21 @@ namespace Evolutionary_Sim
             return matrix;
         }
 
-        public static int[,] GetThreeByThree()
+        public static int[,] GetThreeByThree(int layer)
         {
             int[,] matrix = new int[3, 3];
 
-            matrix[0, 0] = getCloseTile(-1, -1, 1);
-            matrix[0, 1] = getCloseTile(0, -1, 1);
-            matrix[0, 2] = getCloseTile(1, -1, 1);
+            matrix[0, 0] = getCloseTile(-1, -1, layer);
+            matrix[0, 1] = getCloseTile(0, -1, layer);
+            matrix[0, 2] = getCloseTile(1, -1, layer);
 
-            matrix[1, 0] = getCloseTile(-1, 0, 1);
+            matrix[1, 0] = getCloseTile(-1, 0, layer);
             matrix[1, 1] = 100;
-            matrix[1, 2] = getCloseTile(1, 0, 1);
+            matrix[1, 2] = getCloseTile(1, 0, layer);
 
-            matrix[2, 0] = getCloseTile(-1, 1, 1);
-            matrix[2, 1] = getCloseTile(0, 1, 1);
-            matrix[2, 2] = getCloseTile(1, 1, 1);
+            matrix[2, 0] = getCloseTile(-1, 1, layer);
+            matrix[2, 1] = getCloseTile(0, 1, layer);
+            matrix[2, 2] = getCloseTile(1, 1, layer);
 
             return matrix;
         }
@@ -219,39 +230,116 @@ namespace Evolutionary_Sim
             fruitTotal++;
         }
 
+        public static void CheckDirt()
+        {
+            if(getCloseTile(0,0, 1) == 22)
+            {
+                skipFrameCounter++;
+            }
+        }
+        public static void CheckFruit()
+        {
+            Debug.WriteLine("Current co-ordinate : " + xPosition + " , " + yPosition);
+            int[,] matrix = GetThreeByThree(3);
+            for (int x = 0; x < 3; x++)
+            {
+                for (int y = 0; y < 3; y++)
+                {
+                    if (matrix[x, y] == 40)
+                    {
+                        EatFruit(x, y);
+                    }
+                }
+            }
+        }
+
+        public static void EatFruit(int x, int y)
+        {
+            int[,] grid = GetThreeByThree(3);
+            for (int i = 0; i < 3; i++)
+            {
+                Debug.WriteLine("\n");
+                for (int j = 0; j < 3; j++)
+                {
+                    Debug.Write(grid[j,i] + " , ");
+                }
+            }
+            
+            Map.SetTileAtSquare(xPosition + (x * 16), yPosition + (y * 16), 0, Map.layer3);
+            Debug.WriteLine("");
+            Debug.WriteLine("Ate apple at : " + (xPosition + (x * 16)) + " , " + yPosition + (y * 16));
+            Debug.WriteLine("\n");
+            int[,] grid2 = GetThreeByThree(3);
+            for (int i = 0; i < 3; i++)
+            {    
+                Debug.WriteLine("\n");
+                for (int j = 0; j < 3; j++)
+                {
+                    Debug.Write(grid2[j, i] + " , ");
+                }
+            }
+           
+        }
+
+         public static Vector2 CheckNextMove(int x, int y, int newDirX, int newDirY, int layer)// 500, 484, 0, -16
+        {
+            if(getCloseTile(x, y, 1) != 2)  //move if there is no next water tile, if so then stay
+            {
+                xPosition += newDirX;
+                yPosition += newDirY;
+            }
+            return new Vector2(xPosition, yPosition);
+        }
         public void moveUp()
         {
-            yPosition = yPosition - 16;
-            BaseSprite.WorldLocation = new Vector2(xPosition, yPosition);
+            BaseSprite.WorldLocation = CheckNextMove(0, -1, 0, -16, 1); // 500, 484, 0, -16
         }
 
         public void moveDown()
         {
-            yPosition = yPosition + 16;
-            BaseSprite.WorldLocation = new Vector2(xPosition, yPosition);
+            BaseSprite.WorldLocation = CheckNextMove(0, 1, 0, 16, 1);
         }
 
         public void moveLeft()
         {
-            xPosition = xPosition - 16;
-            BaseSprite.WorldLocation = new Vector2(xPosition, yPosition);
+            BaseSprite.WorldLocation = CheckNextMove(-1,0,-16,0,1);
         }
 
         public void moveRight()
         {
-            xPosition = xPosition + 16;
-            BaseSprite.WorldLocation = new Vector2(xPosition, yPosition);
+            BaseSprite.WorldLocation = CheckNextMove(1,0,16,0,1);
         }
         #endregion
 
+        public void MoveAgent()
+        {
+            switch (rnd.Next(4))
+            {
+                case 0:
+                    moveUp();
+                    break;
+
+                case 1:
+                    moveDown();
+                    break;
+
+                case 2:
+                    moveLeft();
+                    break;
+
+                case 3:
+                    moveRight();
+                    break;
+            }
+        }
         public void Update(GameTime gameTime)
         {
-            
             currentTime += (float)gameTime.ElapsedGameTime.TotalSeconds;
             rounded = (int)Math.Round(currentTime, 0);
+
             if (currentTime >= TIMER)
             {
-                if (HealthBar.GetHealth() > 0)
+                if (HealthBar.GetHealth() > 0) // remove 5 health every update
                 {
                     health.RemoveHealth(5);
                 }
@@ -260,28 +348,21 @@ namespace Evolutionary_Sim
                     Map.ClearArray();
                     map = new Map();
                     game1.getMap(graphics); // initialise map
-                    health.AddHealth(100);
+                    health.AddHealth(game1.hp);
                 }
                 //GetMove(GetThreeByThree());
+
                 Debug.WriteLine(i++);
-
-                switch (rnd.Next(4))
+                Debug.WriteLine("Counter: " + skipFrameCounter);
+                if (skipFrameCounter > 0)
                 {
-                    case 0:
-                        moveUp();
-                        break;
-
-                    case 1:
-                        moveDown();
-                        break;
-
-                    case 2:
-                        moveLeft();
-                        break;
-
-                    case 3:
-                        moveRight();
-                        break;
+                    skipFrameCounter--;
+                }else
+                {
+                    MoveAgent();
+                    CheckDirt();
+                    Debug.WriteLine("Current co-ordinate : " + xPosition + " , " + yPosition);
+                    //CheckFruit();
                 }
                 currentTime = 0;
             }

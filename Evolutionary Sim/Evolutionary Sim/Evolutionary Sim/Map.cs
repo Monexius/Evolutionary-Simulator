@@ -16,8 +16,8 @@ namespace Map_Animations
         #region Declarations
         public const int TileWidth = 16;
         public const int TileHeight = 16;
-        public const int MapWidth = 500;
-        public const int MapHeight = 1000;
+        public const int MapWidth = 300;
+        public const int MapHeight = 100;
 
         public static int generations;
         public static int caveThreshold = 5;
