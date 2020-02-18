@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <SourceFile>D:/GitHub/Evolutionary-Simulator/Evolutionary Sim/Evolutionary Sim/Evolutionary Sim/Content/healthBar.png</SourceFile>
-  <SourceTime>2020-02-03T16:50:47.2305657+00:00</SourceTime>
+  <SourceTime>2020-02-17T14:39:40.1105409+00:00</SourceTime>
   <DestFile>D:/GitHub/Evolutionary-Simulator/Evolutionary Sim/Evolutionary Sim/Evolutionary Sim/Content/bin/Windows/healthBar.xnb</DestFile>
-  <DestTime>2020-02-03T16:51:42.7427408+00:00</DestTime>
+  <DestTime>2020-02-17T14:40:31.4084749+00:00</DestTime>
   <Importer>TextureImporter</Importer>
   <ImporterTime>2017-03-01T15:05:36+00:00</ImporterTime>
   <Processor>TextureProcessor</Processor>

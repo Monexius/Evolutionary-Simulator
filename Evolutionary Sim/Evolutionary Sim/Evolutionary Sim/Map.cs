@@ -16,7 +16,7 @@ namespace Map_Animations
         #region Declarations
         public const int TileWidth = 16;
         public const int TileHeight = 16;
-        public const int MapWidth = 300;
+        public const int MapWidth = 200;
         public const int MapHeight = 100;
 
         public static int generations;
@@ -85,6 +85,7 @@ namespace Map_Animations
 
             tiles.Add(22, new Rectangle(Tile(0), Tile(2), TileWidth, TileHeight)); //Mud Tile 1
             tiles.Add(100, new Rectangle(Tile(1), Tile(3), TileWidth, TileHeight)); //Agent
+            tiles.Add(101, new Rectangle(0, 0, TileWidth, TileHeight)); //Agent
 
             GenerateRandomMap();
             GenerateCaves();
@@ -479,14 +480,14 @@ namespace Map_Animations
                     surroundBarrier = true;
                 }
                 if (surroundBarrier == false)
-                    if (rnd.Next(32, 99) <= wallChancePerSquare)
-                    { // chance to spawn grass
+                    if (rnd.Next(30, 99) <= wallChancePerSquare)
+                    { // chance to spawn plant
                         counter++;
                         layer2[x, y] = 21;
                         mapFruitBushesX.Add(x);
                         mapFruitBushesY.Add(y);
 
-                        if (rnd.Next(32, 99) > 50)
+                        if (rnd.Next(22, 99) > 50)
                         {
                             layer3[x, y] = 40;
                         }

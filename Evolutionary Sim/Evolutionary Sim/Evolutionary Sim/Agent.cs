@@ -31,7 +31,7 @@ namespace Evolutionary_Sim
         public static float TIMER = 0.5f;
         public static int time = 0;
         private static IBlackBox brain;
-        private int fruitTotal;
+        private static int fruitTotal;
         public static int skipFrameCounter;
 
         Map map;
@@ -96,7 +96,189 @@ namespace Evolutionary_Sim
 
             return tile;
         }
+        
+        #region Movement
+        public static void CheckDirt()
+        {
+            if(getCloseTile(0,0, 1) == 22)
+            {
+                skipFrameCounter++;
+            }
+        }
+        public static void CheckFruit()
+        {
+            int[,] matrix = GetThreeByThree(3);
+            for (int y = 0; y < 3; y++)
+            {
+                for (int x = 0; x < 3; x++)
+                {
+                    if (matrix[y,x] == 40 || matrix[y,x] == 41)
+                    {
+                        EatFruit(y, x);
+                        fruitTotal++;
+                    }
+                }
+            }
+        }
 
+        public static void EatFruit(int y, int x)
+        {
+            int[,] xMatrix = GetXCoordinates();
+            int[,] yMatrix = GetYCoordinates();
+
+            Debug.WriteLine(xMatrix[y,x] + " " + yMatrix[y,x]);
+            Map.SetTileAtSquare(xMatrix[y,x] / 16, yMatrix[y,x] / 16, 0, Map.layer3);
+            
+            Debug.WriteLine("\n");
+        }
+
+         public static Vector2 CheckNextMove(int x, int y, int newDirX, int newDirY, int layer)// 500, 484, 0, -16
+        {
+            if(getCloseTile(x, y, 1) != 2)  //move if there is no next water tile, if so then stay
+            {
+                xPosition += newDirX;
+                yPosition += newDirY;
+            }
+            return new Vector2(xPosition, yPosition);
+        }
+        public void moveUp()
+        {
+            BaseSprite.WorldLocation = CheckNextMove(0, -1, 0, -16, 1); // 500, 484, 0, -16
+        }
+
+        public void moveDown()
+        {
+            BaseSprite.WorldLocation = CheckNextMove(0, 1, 0, 16, 1);
+        }
+
+        public void moveLeft()
+        {
+            BaseSprite.WorldLocation = CheckNextMove(-1,0,-16,0,1);
+        }
+
+        public void moveRight()
+        {
+            BaseSprite.WorldLocation = CheckNextMove(1,0,16,0,1);
+        }
+        #endregion
+
+        public void MoveAgent()
+        {
+            switch (rnd.Next(4))
+            {
+                case 0:
+                    moveUp();
+                    break;
+
+                case 1:
+                    moveDown();
+                    break;
+
+                case 2:
+                    moveLeft();
+                    break;
+
+                case 3:
+                    moveRight();
+                    break;
+            }
+        }
+        public void Update(GameTime gameTime)
+        {
+            currentTime += (float)gameTime.ElapsedGameTime.TotalSeconds;
+            rounded = (int)Math.Round(currentTime, 0);
+
+            if (currentTime >= TIMER)
+            {
+                if (HealthBar.GetHealth() > 0) // remove 5 health every update
+                {
+                    health.RemoveHealth(5);
+                }
+                else
+                {
+                    Map.ClearArray();
+                    map = new Map();
+                    game1.getMap(graphics); // initialise map
+                    health.AddHealth(game1.hp);
+                }
+               
+                Debug.WriteLine(i++);
+                Debug.WriteLine("Counter: " + skipFrameCounter);
+                if (skipFrameCounter > 0)
+                {
+                    skipFrameCounter--;
+                }else
+                {
+                    MoveAgent();
+                    //GetMove(Map.mapSquares);
+                    CheckDirt();
+                    Debug.WriteLine("Current co-ordinate : " + xPosition + " , " + yPosition);
+                    CheckFruit();
+                }
+                currentTime = 0;
+            }
+            BaseSprite.Update(gameTime);
+        }
+       
+        public int GetTimeSurvived()
+        {
+            return rounded;
+        }
+
+        public int GetFruitTotal()
+        {
+            return fruitTotal;
+        }
+
+        public int[,] GetMove(int[,] board)
+        { 
+            // Clear the network
+            Brain.ResetState();
+
+            // Convert the game board into an input array for the network
+            setInputSignalArray(Brain.InputSignalArray, board);
+
+            // Activate the network
+            Brain.Activate();
+
+            int[,] move = null;
+            double max = double.MinValue;
+
+            for (int i = 0; i < 5; i++)
+            {
+                for (int j = 0; j < 5; j++)
+                {
+                    //if the square is water, ignore it #1
+
+
+                    // Set the score for this square.
+                    double score = Brain.OutputSignalArray[i * 3 + j];
+
+                    //If he lives after the first move, call it current best.
+                    if (move == null)
+                    {
+                        max = score;
+                    }
+                }
+            }
+            return move; 
+        }
+
+        private void setInputSignalArray(ISignalArray inputArr, int[,] board)
+        {
+
+            for (int y = 0; i < 25; i++)
+            {
+                for (int x = 0; x < 5; x++)
+                {
+                    for (int i = 0; y < 5; y++)
+                    {
+                        inputArr[i] = board[x, y];
+                    }
+                }
+            }
+        }
+        
         public static int[,] GetSurroundingTiles()
         {
             int[,] matrix = new int[5,5];
@@ -224,208 +406,42 @@ namespace Evolutionary_Sim
             return matrix;
         }
 
-        #region Movement
-        public void eatFruit()
+        public static int[,] GetXCoordinates()
         {
-            fruitTotal++;
+            int[,] matrix = new int[3, 3];
+
+            matrix[0, 0] = xPosition - 16;
+            matrix[0, 1] = xPosition;
+            matrix[0, 2] = xPosition + 16;
+
+            matrix[1, 0] = xPosition - 16;
+            matrix[1, 1] = xPosition;
+            matrix[1, 2] = xPosition + 16;
+
+            matrix[2, 0] = xPosition - 16;
+            matrix[2, 1] = xPosition;
+            matrix[2, 2] = xPosition + 16;
+
+            return matrix;
         }
 
-        public static void CheckDirt()
+        public static int[,] GetYCoordinates()
         {
-            if(getCloseTile(0,0, 1) == 22)
-            {
-                skipFrameCounter++;
-            }
-        }
-        public static void CheckFruit()
-        {
-            Debug.WriteLine("Current co-ordinate : " + xPosition + " , " + yPosition);
-            int[,] matrix = GetThreeByThree(3);
-            for (int x = 0; x < 3; x++)
-            {
-                for (int y = 0; y < 3; y++)
-                {
-                    if (matrix[x, y] == 40)
-                    {
-                        EatFruit(x, y);
-                    }
-                }
-            }
-        }
+            int[,] matrix = new int[3, 3];
 
-        public static void EatFruit(int x, int y)
-        {
-            int[,] grid = GetThreeByThree(3);
-            for (int i = 0; i < 3; i++)
-            {
-                Debug.WriteLine("\n");
-                for (int j = 0; j < 3; j++)
-                {
-                    Debug.Write(grid[j,i] + " , ");
-                }
-            }
-            
-            Map.SetTileAtSquare(xPosition + (x * 16), yPosition + (y * 16), 0, Map.layer3);
-            Debug.WriteLine("");
-            Debug.WriteLine("Ate apple at : " + (xPosition + (x * 16)) + " , " + yPosition + (y * 16));
-            Debug.WriteLine("\n");
-            int[,] grid2 = GetThreeByThree(3);
-            for (int i = 0; i < 3; i++)
-            {    
-                Debug.WriteLine("\n");
-                for (int j = 0; j < 3; j++)
-                {
-                    Debug.Write(grid2[j, i] + " , ");
-                }
-            }
-           
-        }
+            matrix[0, 0] = yPosition - 16;
+            matrix[0, 1] = yPosition - 16;
+            matrix[0, 2] = yPosition - 16;
 
-         public static Vector2 CheckNextMove(int x, int y, int newDirX, int newDirY, int layer)// 500, 484, 0, -16
-        {
-            if(getCloseTile(x, y, 1) != 2)  //move if there is no next water tile, if so then stay
-            {
-                xPosition += newDirX;
-                yPosition += newDirY;
-            }
-            return new Vector2(xPosition, yPosition);
-        }
-        public void moveUp()
-        {
-            BaseSprite.WorldLocation = CheckNextMove(0, -1, 0, -16, 1); // 500, 484, 0, -16
-        }
+            matrix[1, 0] = yPosition;
+            matrix[1, 1] = yPosition;
+            matrix[1, 2] = yPosition;
 
-        public void moveDown()
-        {
-            BaseSprite.WorldLocation = CheckNextMove(0, 1, 0, 16, 1);
-        }
+            matrix[2, 0] = yPosition + 16;
+            matrix[2, 1] = yPosition + 16;
+            matrix[2, 2] = yPosition + 16;
 
-        public void moveLeft()
-        {
-            BaseSprite.WorldLocation = CheckNextMove(-1,0,-16,0,1);
-        }
-
-        public void moveRight()
-        {
-            BaseSprite.WorldLocation = CheckNextMove(1,0,16,0,1);
-        }
-        #endregion
-
-        public void MoveAgent()
-        {
-            switch (rnd.Next(4))
-            {
-                case 0:
-                    moveUp();
-                    break;
-
-                case 1:
-                    moveDown();
-                    break;
-
-                case 2:
-                    moveLeft();
-                    break;
-
-                case 3:
-                    moveRight();
-                    break;
-            }
-        }
-        public void Update(GameTime gameTime)
-        {
-            currentTime += (float)gameTime.ElapsedGameTime.TotalSeconds;
-            rounded = (int)Math.Round(currentTime, 0);
-
-            if (currentTime >= TIMER)
-            {
-                if (HealthBar.GetHealth() > 0) // remove 5 health every update
-                {
-                    health.RemoveHealth(5);
-                }
-                else
-                {
-                    Map.ClearArray();
-                    map = new Map();
-                    game1.getMap(graphics); // initialise map
-                    health.AddHealth(game1.hp);
-                }
-                //GetMove(GetThreeByThree());
-
-                Debug.WriteLine(i++);
-                Debug.WriteLine("Counter: " + skipFrameCounter);
-                if (skipFrameCounter > 0)
-                {
-                    skipFrameCounter--;
-                }else
-                {
-                    MoveAgent();
-                    CheckDirt();
-                    Debug.WriteLine("Current co-ordinate : " + xPosition + " , " + yPosition);
-                    //CheckFruit();
-                }
-                currentTime = 0;
-            }
-            BaseSprite.Update(gameTime);
-        }
-       
-        public int GetTimeSurvived()
-        {
-            return rounded;
-        }
-
-        public int GetFruitTotal()
-        {
-            return fruitTotal;
-        }
-
-        public int[,] GetMove(int[,] board)
-        { 
-            // Clear the network
-            Brain.ResetState();
-
-            // Convert the game board into an input array for the network
-            setInputSignalArray(Brain.InputSignalArray, board);
-
-            // Activate the network
-            Brain.Activate();
-
-            int[,] move = null;
-            double max = double.MinValue;
-
-            for (int i = 0; i < 5; i++)
-            {
-                for (int j = 0; j < 5; j++)
-                {
-                    //if the square is water, ignore it #1
-
-
-                    // Set the score for this square.
-                    double score = Brain.OutputSignalArray[i * 3 + j];
-
-                    //If he lives after the first move, call it current best.
-                    if (move == null)
-                    {
-                        max = score;
-                    }
-                }
-            }
-            return move; 
-        }
-
-        private void setInputSignalArray(ISignalArray inputArr, int[,] board)
-        {
-
-            for (int y = 0; i < 25; i++)
-            {
-                for (int x = 0; x < 5; x++)
-                {
-                    for (int i = 0; y < 5; y++)
-                    {
-                        inputArr[i] = board[x, y];
-                    }
-                }
-            }
+            return matrix;
         }
 
         public static void Draw(SpriteBatch spriteBatch, SpriteFont basicFont)

@@ -142,8 +142,10 @@ namespace Evolutionary_Sim
             spriteBatch.DrawString(basicFont, "Game Time: " + rounded.ToString(), new Vector2(10, 30), Color.White);
             spriteBatch.DrawString(basicFont, "Generation: 0", new Vector2(10, 50), Color.White);
             spriteBatch.DrawString(basicFont, "Current Tile ID: " + agent.CurrentTile.ToString(), new Vector2(10, 70), Color.White);
-            
-          
+            spriteBatch.DrawString(basicFont, "Eaten Fruits: " + agent.GetFruitTotal().ToString(), new Vector2(10, 90), Color.White);
+
+
+
 
             spriteBatch.End();
             base.Draw(gameTime);
