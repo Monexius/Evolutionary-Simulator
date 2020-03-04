@@ -1,10 +1,15 @@
-﻿using Map_Animations;
+﻿using log4net.Config;
+using Map_Animations;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using SharpNeat.EvolutionAlgorithms;
+using SharpNeat.Genomes.Neat;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
+using System.Xml;
 
 namespace Evolutionary_Sim
 {
@@ -26,13 +31,16 @@ namespace Evolutionary_Sim
         Agent agent;
         HealthBar healthBar;
         SpriteFont basicFont;
+        Experiment experiment;
 
         public static float currentTime = 0f;
         public static int screenHeight = 800;
         public static int screenWidth = 1600;
         public int rounded;
-        public int hp = 1000;
+        public int hp = 100;
 
+        static NeatEvolutionAlgorithm<NeatGenome> _ea;
+        const string CHAMPION_FILE = "champion.xml";
         // create a public list for the Fruit.cs so each instance of the object can be drawn in the draw with a foreach loop
         public Game1()
         {
@@ -50,16 +58,31 @@ namespace Evolutionary_Sim
             graphics.ApplyChanges();
             map = new Map();
             fruits = new List<MapFruit>();
+            agent = new Agent();
             keyboardManager = new KeyboardManager();
             screenTransition = new ScreenTransition();
-            agent = new Agent();
             healthBar = new HealthBar();
+            experiment = new Experiment();
+
             base.Initialize();
 
         }
 
         protected override void LoadContent()
         {
+            
+            XmlConfigurator.Configure(new FileInfo("log4net.properties"));
+
+            XmlDocument xmlConfig = new XmlDocument();
+            xmlConfig.Load("Evolution.config.xml");
+            experiment.Initialize("Evolution", xmlConfig.DocumentElement);
+
+            _ea = experiment.CreateEvolutionAlgorithm();
+            _ea.UpdateEvent += new EventHandler(ea_UpdateEvent);
+            // Start algorithm (it will run on a background thread).
+            _ea.StartContinue();
+
+
             circleTexture2D = Content.Load<Texture2D>("GreenCircle");
             spriteSheet = Content.Load<Texture2D>("Ev_TileSet");
             basicFont = Content.Load<SpriteFont>("font");
@@ -85,6 +108,18 @@ namespace Evolutionary_Sim
             //Player.Initialize(spriteSheet, new Rectangle(0, 0, 16, 16), 2, new Vector2(300, 300)); // get tank and turret rectangle, then number of frames for animation
         }
 
+        static void ea_UpdateEvent(object sender, EventArgs e)
+        {
+            Console.WriteLine(string.Format("gen={0:N0} bestFitness={1:N6}",
+                                    _ea.CurrentGeneration, _ea.Statistics._maxFitness));
+
+            // Save the best genome to file
+            //var doc = NeatGenomeXmlIO.SaveComplete(
+            //                         new List<NeatGenome>() { _ea.CurrentChampGenome },
+            //                         false);
+            //doc.Save(CHAMPION_FILE);
+        }
+
         protected override void UnloadContent()
         {
            
@@ -94,8 +129,10 @@ namespace Evolutionary_Sim
         {
             keyboardManager.HandleInput(gameTime, spriteSheet, healthTexture);
             agent.Update(gameTime);
+        
             base.Update(gameTime);
         }
+
         public void getMap(Texture2D spriteSheet)
         {
             Map.Initialize(spriteSheet, 2, 4, 33);
@@ -113,7 +150,7 @@ namespace Evolutionary_Sim
             spriteBatch.Begin();
             Map.Draw(spriteBatch, false,textur);
             Agent.Draw(spriteBatch, basicFont);
-
+            
             spriteBatch.Draw(textur, new Rectangle(1501, 10, 48, 55), Color.White);
 
             spriteBatch.Draw(textur, new Rectangle((screenWidth - 400), (screenHeight - 125), 86, 20), Color.White);
@@ -143,9 +180,6 @@ namespace Evolutionary_Sim
             spriteBatch.DrawString(basicFont, "Generation: 0", new Vector2(10, 50), Color.White);
             spriteBatch.DrawString(basicFont, "Current Tile ID: " + agent.CurrentTile.ToString(), new Vector2(10, 70), Color.White);
             spriteBatch.DrawString(basicFont, "Eaten Fruits: " + agent.GetFruitTotal().ToString(), new Vector2(10, 90), Color.White);
-
-
-
 
             spriteBatch.End();
             base.Draw(gameTime);

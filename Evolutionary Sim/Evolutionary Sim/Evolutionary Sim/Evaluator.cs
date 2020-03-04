@@ -15,13 +15,15 @@ namespace Evolutionary_Sim
         private ulong _evalCount;
         private bool _stopConditionSatisfied;
         public int oldFruits;
-        public int oldHealth;
+        public int oldTime;
 
         HealthBar health;
         Agent neatPlayer;
+        Game1 game;
+
         public int getScore(int numOfFruits, int timeSurvived)
         {
-            if (numOfFruits > oldFruits && timeSurvived > oldHealth)
+            if (numOfFruits > oldFruits && timeSurvived > oldTime)
                 return 10;
 
             return 0;
@@ -49,7 +51,8 @@ namespace Evolutionary_Sim
         public FitnessInfo Evaluate(IBlackBox box)
         {
             double fitness = 0;
-            
+            neatPlayer = new Agent();
+            neatPlayer.Iterate();
             neatPlayer.InitializeBrain(box);
 
             if(HealthBar.GetHealth() < 1) // If agent died 
@@ -57,6 +60,9 @@ namespace Evolutionary_Sim
                 int timeSurvived = neatPlayer.GetTimeSurvived();
                 int fruits = neatPlayer.GetFruitTotal();
                 fitness += getScore(fruits, timeSurvived); // get fitness
+
+                oldFruits = fruits;
+                oldTime = timeSurvived;
             }
 
             // Update the evaluation counter.
@@ -71,7 +77,7 @@ namespace Evolutionary_Sim
             return new FitnessInfo(fitness, fitness);
 
         }
-        
+
         public void Reset()
         {
 

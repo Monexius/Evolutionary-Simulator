@@ -38,6 +38,7 @@ namespace Evolutionary_Sim
         Sprite sprite;
         HealthBar health;
         Game1 game1;
+        Agent agent;
 
         // NEAT Algorithm
         public static IBlackBox Brain { get; set; }
@@ -57,10 +58,16 @@ namespace Evolutionary_Sim
             game1 = new Game1();
 
         }
+
+        public void Iterate()
+        {
+            spawn();
+        }
+
         public void InitializeBrain(IBlackBox brain)
         {
             Brain = brain;
-        }
+        } 
 
         public void spawn()
         {
@@ -162,23 +169,23 @@ namespace Evolutionary_Sim
         }
         #endregion
 
-        public void MoveAgent()
+        public void MoveAgent(int move)
         {
-            switch (rnd.Next(4))
+            switch (move)
             {
-                case 0:
+                case 1:
                     moveUp();
                     break;
 
-                case 1:
+                case 2:
                     moveDown();
                     break;
 
-                case 2:
+                case 3:
                     moveLeft();
                     break;
 
-                case 3:
+                case 4:
                     moveRight();
                     break;
             }
@@ -204,13 +211,14 @@ namespace Evolutionary_Sim
                
                 Debug.WriteLine(i++);
                 Debug.WriteLine("Counter: " + skipFrameCounter);
+
+
                 if (skipFrameCounter > 0)
                 {
                     skipFrameCounter--;
                 }else
                 {
-                    MoveAgent();
-                    //GetMove(Map.mapSquares);
+                    //MoveAgent(GetMove(Map.mapSquares));
                     CheckDirt();
                     Debug.WriteLine("Current co-ordinate : " + xPosition + " , " + yPosition);
                     CheckFruit();
@@ -230,7 +238,7 @@ namespace Evolutionary_Sim
             return fruitTotal;
         }
 
-        public int[,] GetMove(int[,] board)
+        public int GetMove(int[,] board)
         { 
             // Clear the network
             Brain.ResetState();
@@ -241,7 +249,7 @@ namespace Evolutionary_Sim
             // Activate the network
             Brain.Activate();
 
-            int[,] move = null;
+            int move = 0;
             double max = double.MinValue;
 
             for (int i = 0; i < 5; i++)
@@ -250,14 +258,17 @@ namespace Evolutionary_Sim
                 {
                     //if the square is water, ignore it #1
 
-
                     // Set the score for this square.
-                    double score = Brain.OutputSignalArray[i * 3 + j];
+                    double score = Brain.OutputSignalArray[i * 5 + j];
 
                     //If he lives after the first move, call it current best.
-                    if (move == null)
+                    if (move == 0)
                     {
+                        move = rnd.Next(1, 4);
                         max = score;
+                    }else if(max < score)
+                    {
+
                     }
                 }
             }
@@ -266,17 +277,15 @@ namespace Evolutionary_Sim
 
         private void setInputSignalArray(ISignalArray inputArr, int[,] board)
         {
-
-            for (int y = 0; i < 25; i++)
+            int counter = 0;
+            for(int y = 0; y < 5; y++)
             {
-                for (int x = 0; x < 5; x++)
+                for(int x = 0; x < 5; x++)
                 {
-                    for (int i = 0; y < 5; y++)
-                    {
-                        inputArr[i] = board[x, y];
-                    }
+                    inputArr[counter] = board[y, x];
+                    counter++;
                 }
-            }
+            }    
         }
         
         public static int[,] GetSurroundingTiles()

@@ -53,8 +53,8 @@ namespace Evolutionary_Sim
             {
                 Map.ClearArray();
                 map = new Map();
-
                 game1.getMap(spriteSheet); // initialise map
+                health.AddHealth(game1.hp);
                 //health.AddHealth(game1.hp);
                 //Game1.currentTime = 0f;
                 //agent.Initialize(spriteSheet, healthTexture, new Rectangle(16, 48, 18, 18), 1);
