@@ -28,12 +28,13 @@ namespace Evolutionary_Sim
         static public int rounded;
         public static Texture2D graphics;
         public static int i = 0;
-        public static float TIMER = 0.5f;
+        public static float TIMER = 0.1f;
         public static int time = 0;
         private static IBlackBox brain;
         private static int fruitTotal;
         public static int skipFrameCounter;
 
+        camera camera;
         Map map;
         Sprite sprite;
         HealthBar health;
@@ -100,6 +101,10 @@ namespace Evolutionary_Sim
             {
                 tile = Map.GetTileAtPixel(xPosition + (x * 16), yPosition + (y * 16), Map.layer3);
             }
+            else if (layer == 4)
+            {
+                tile = Map.GetTileAtPixel(xPosition + (x * 16), yPosition + (y * 16), Map.MergeLayers(Map.mapSquares, Map.layer3));
+            }
 
             return tile;
         }
@@ -132,8 +137,6 @@ namespace Evolutionary_Sim
         {
             int[,] xMatrix = GetXCoordinates();
             int[,] yMatrix = GetYCoordinates();
-
-            Debug.WriteLine(xMatrix[y,x] + " " + yMatrix[y,x]);
             Map.SetTileAtSquare(xMatrix[y,x] / 16, yMatrix[y,x] / 16, 0, Map.layer3);
             
             Debug.WriteLine("\n");
@@ -207,21 +210,21 @@ namespace Evolutionary_Sim
                     map = new Map();
                     game1.getMap(graphics); // initialise map
                     health.AddHealth(game1.hp);
+                    Iterate();
+                    fruitTotal = 0;
                 }
                
-                Debug.WriteLine(i++);
-                Debug.WriteLine("Counter: " + skipFrameCounter);
-
+              
 
                 if (skipFrameCounter > 0)
                 {
                     skipFrameCounter--;
                 }else
                 {
-                    //MoveAgent(GetMove(Map.mapSquares));
+                    MoveAgent(GetMove(GetSurroundingMerge()));
                     CheckDirt();
-                    Debug.WriteLine("Current co-ordinate : " + xPosition + " , " + yPosition);
                     CheckFruit();
+                    //camera.Move(new Vector2(xPosition, yPosition));
                 }
                 currentTime = 0;
             }
@@ -254,12 +257,10 @@ namespace Evolutionary_Sim
 
             for (int i = 0; i < 5; i++)
             {
-                for (int j = 0; j < 5; j++)
-                {
-                    //if the square is water, ignore it #1
+                //if the square is water, ignore it #1
 
-                    // Set the score for this square.
-                    double score = Brain.OutputSignalArray[i * 5 + j];
+                // Set the score for this move
+                double score = Brain.OutputSignalArray[i];
 
                     //If he lives after the first move, call it current best.
                     if (move == 0)
@@ -268,13 +269,13 @@ namespace Evolutionary_Sim
                         max = score;
                     }else if(max < score)
                     {
-
+                       max = score;
+                       move = i;
                     }
-                }
             }
             return move; 
         }
-
+        
         private void setInputSignalArray(ISignalArray inputArr, int[,] board)
         {
             int counter = 0;
@@ -392,6 +393,42 @@ namespace Evolutionary_Sim
             matrix[4, 2] = getCloseTile(0, 2, 3);
             matrix[4, 3] = getCloseTile(1, 2, 3);
             matrix[4, 4] = getCloseTile(2, 2, 3);
+
+            return matrix;
+        }
+
+        public static int[,] GetSurroundingMerge()
+        {
+            int[,] matrix = new int[5, 5];
+            matrix[0, 0] = getCloseTile(-2, -2, 4);
+            matrix[0, 1] = getCloseTile(-1, -2, 4);
+            matrix[0, 2] = getCloseTile(0, -2, 4);
+            matrix[0, 3] = getCloseTile(1, -2, 4);
+            matrix[0, 4] = getCloseTile(2, -2, 4);
+
+            matrix[1, 0] = getCloseTile(-2, -1, 4);
+            matrix[1, 1] = getCloseTile(-1, -1, 4);
+            matrix[1, 2] = getCloseTile(0, -1, 4);
+            matrix[1, 3] = getCloseTile(1, -1, 4);
+            matrix[1, 4] = getCloseTile(2, -1, 4);
+
+            matrix[2, 0] = getCloseTile(-2, 0, 4);
+            matrix[2, 1] = getCloseTile(-1, 0, 4);
+            matrix[2, 2] = 100;
+            matrix[2, 3] = getCloseTile(1, 0, 4);
+            matrix[2, 4] = getCloseTile(2, 0, 4);
+
+            matrix[3, 0] = getCloseTile(-2, 1, 4);
+            matrix[3, 1] = getCloseTile(-1, 1, 4);
+            matrix[3, 2] = getCloseTile(0, 1, 4);
+            matrix[3, 3] = getCloseTile(1, 1, 4);
+            matrix[3, 4] = getCloseTile(2, 1, 4);
+
+            matrix[4, 0] = getCloseTile(-2, 2, 4);
+            matrix[4, 1] = getCloseTile(-1, 2, 4);
+            matrix[4, 2] = getCloseTile(0, 2, 4);
+            matrix[4, 3] = getCloseTile(1, 2, 4);
+            matrix[4, 4] = getCloseTile(2, 2, 4);
 
             return matrix;
         }

@@ -38,7 +38,7 @@ namespace Evolutionary_Sim
                 //scrollx -= 5;
                 //scrolly = Camera.WorldRectangle.Y;
                 //scrolly -= 5;
-                Camera.ZoomAction(-0.1f);
+                camera.ZoomAction(-0.1f);
             }
             else if (scrollState.ScrollWheelValue > lastScrollState)
             {
@@ -46,7 +46,7 @@ namespace Evolutionary_Sim
                 //scrollx += 5;
                 //scrolly = Camera.WorldRectangle.Y;
                 //scrolly += 5;
-                Camera.ZoomAction(0.1f);
+                camera.ZoomAction(0.1f);
             }
             //Player.Update(gameTime);
             if (mouseState.LeftButton == ButtonState.Pressed && lastMouseState.LeftButton == ButtonState.Released)
@@ -66,19 +66,19 @@ namespace Evolutionary_Sim
             }
             if (keyboardState.IsKeyDown(Keys.W) && lastKeyboardState.IsKeyUp(Keys.W))
             {
-                Camera.Move(moveUp);
+                camera.Move(moveUp);
             }
             if (keyboardState.IsKeyDown(Keys.S) && lastKeyboardState.IsKeyUp(Keys.S))
             {
-                Camera.Move(moveDown);
+                camera.Move(moveDown);
             }
             if (keyboardState.IsKeyDown(Keys.D) && lastKeyboardState.IsKeyUp(Keys.D))
             {
-                Camera.Move(moveRight);
+                camera.Move(moveRight);
             }
             if (keyboardState.IsKeyDown(Keys.A) && lastKeyboardState.IsKeyUp(Keys.A))
             {
-                Camera.Move(moveLeft);
+                camera.Move(moveLeft);
             }
             if (keyboardState.IsKeyDown(Keys.Escape))
             {

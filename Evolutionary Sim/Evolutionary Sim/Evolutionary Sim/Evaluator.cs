@@ -4,6 +4,7 @@ using SharpNeat.Core;
 using SharpNeat.Phenomes;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,16 +16,17 @@ namespace Evolutionary_Sim
         private ulong _evalCount;
         private bool _stopConditionSatisfied;
         public int oldFruits;
-        public int oldTime;
-
+        public double fitness = 0;
         HealthBar health;
         Agent neatPlayer;
         Game1 game;
 
-        public int getScore(int numOfFruits, int timeSurvived)
+        public double getScore(int numOfFruits)
         {
-            if (numOfFruits > oldFruits && timeSurvived > oldTime)
-                return 10;
+            if (numOfFruits > oldFruits)
+                return 0.0010;
+            if (numOfFruits == oldFruits)
+                return 0.001;
 
             return 0;
         }
@@ -50,26 +52,25 @@ namespace Evolutionary_Sim
         //Called at the end of every death
         public FitnessInfo Evaluate(IBlackBox box)
         {
-            double fitness = 0;
-            neatPlayer = new Agent();
-            neatPlayer.Iterate();
-            neatPlayer.InitializeBrain(box);
+            
 
-            if(HealthBar.GetHealth() < 1) // If agent died 
+            if (HealthBar.GetHealth() < 1) // If agent died 
             {
+                neatPlayer = new Agent();
+                //neatPlayer.Iterate();
+                neatPlayer.InitializeBrain(box);
+
                 int timeSurvived = neatPlayer.GetTimeSurvived();
                 int fruits = neatPlayer.GetFruitTotal();
-                fitness += getScore(fruits, timeSurvived); // get fitness
-
+                fitness += getScore(fruits); // get fitness
+                //Debug.WriteLine(fitness);
                 oldFruits = fruits;
-                oldTime = timeSurvived;
             }
 
             // Update the evaluation counter.
             _evalCount++;
+            //Debug.WriteLine("Eval counter: " + _evalCount);
 
-            // If the network plays perfectly, it will beat the random player
-            // and draw the optimal player.
             if (fitness >= 1002)
                 _stopConditionSatisfied = true;
 

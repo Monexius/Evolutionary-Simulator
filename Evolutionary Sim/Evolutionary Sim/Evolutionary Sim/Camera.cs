@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Map_Animations
 {
-    class Camera
+    class camera
     {
         #region Declarations
         private static Vector2 position = Vector2.Zero;

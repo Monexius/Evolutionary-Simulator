@@ -24,7 +24,7 @@ namespace Evolutionary_Sim
         ScreenTransition screenTransition;
         KeyboardManager keyboardManager;
         Map map;
-        Camera camera;
+        camera camera;
         Sprite sprite;
         MapFruit fruit;
         List<MapFruit> fruits;
@@ -37,10 +37,19 @@ namespace Evolutionary_Sim
         public static int screenHeight = 800;
         public static int screenWidth = 1600;
         public int rounded;
-        public int hp = 100;
+        public int hp = 200;
 
         static NeatEvolutionAlgorithm<NeatGenome> _ea;
         const string CHAMPION_FILE = "champion.xml";
+
+        public Texture2D GetTexture()
+        {
+            return spriteSheet;
+        }
+        public Texture2D GetHealthTexture()
+        {
+            return healthTexture;
+        }
         // create a public list for the Fruit.cs so each instance of the object can be drawn in the draw with a foreach loop
         public Game1()
         {
@@ -54,7 +63,7 @@ namespace Evolutionary_Sim
             graphics.PreferredBackBufferHeight = screenHeight;
             graphics.PreferredBackBufferWidth = screenWidth;
 
-            camera = new Camera();
+            camera = new camera();
             graphics.ApplyChanges();
             map = new Map();
             fruits = new List<MapFruit>();
@@ -70,13 +79,10 @@ namespace Evolutionary_Sim
 
         protected override void LoadContent()
         {
-            
             XmlConfigurator.Configure(new FileInfo("log4net.properties"));
-
             XmlDocument xmlConfig = new XmlDocument();
             xmlConfig.Load("Evolution.config.xml");
             experiment.Initialize("Evolution", xmlConfig.DocumentElement);
-
             _ea = experiment.CreateEvolutionAlgorithm();
             _ea.UpdateEvent += new EventHandler(ea_UpdateEvent);
             // Start algorithm (it will run on a background thread).
@@ -89,9 +95,9 @@ namespace Evolutionary_Sim
             healthTexture = Content.Load<Texture2D>("healthBar");
 
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            Camera.WorldRectangle = new Rectangle(0, 0, 3600, 3600); // define border of camera for map
-            Camera.ViewPortWidth = GraphicsDevice.Viewport.Width;
-            Camera.ViewPortHeight = GraphicsDevice.Viewport.Height;
+            camera.WorldRectangle = new Rectangle(0, 0, 3600, 3600); // define border of camera for map
+            camera.ViewPortWidth = GraphicsDevice.Viewport.Width;
+            camera.ViewPortHeight = GraphicsDevice.Viewport.Height;
             getMap(spriteSheet); // initialise map
             agent.Initialize(spriteSheet, healthTexture, new Rectangle(16, 48, 18, 18), 1);
             healthBar.Initialize(healthTexture, new Vector2(390, 10), new Rectangle(0, 0, hp, healthTexture.Height + 3), hp);
@@ -127,9 +133,10 @@ namespace Evolutionary_Sim
         
         protected override void Update(GameTime gameTime)
         {
+
             keyboardManager.HandleInput(gameTime, spriteSheet, healthTexture);
             agent.Update(gameTime);
-        
+            
             base.Update(gameTime);
         }
 

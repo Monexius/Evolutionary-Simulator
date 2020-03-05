@@ -98,7 +98,7 @@ namespace Map_Animations
         {
             get
             {
-                return Camera.Transform(worldLocation);
+                return camera.Transform(worldLocation);
             }
         }
 
@@ -120,7 +120,7 @@ namespace Map_Animations
         {
             get
             {
-                return Camera.Transform(WorldRectangle);
+                return camera.Transform(WorldRectangle);
             }
         }
 
@@ -136,7 +136,7 @@ namespace Map_Animations
 
         public Vector2 ScreenCenter
         {
-            get { return Camera.Transform(worldLocation + RelativeCenter); }
+            get { return camera.Transform(worldLocation + RelativeCenter); }
         }
 
         #endregion
@@ -219,7 +219,7 @@ namespace Map_Animations
         {
             if (!Expired)
             {
-                if (Camera.ObjectIsVisible(WorldRectangle))
+                if (camera.ObjectIsVisible(WorldRectangle))
                 {
                     spriteBatch.Draw(Texture, ScreenCenter, Source, tintColor, rotation, RelativeCenter, 1.0f, SpriteEffects.None, 0.0f);
                 }

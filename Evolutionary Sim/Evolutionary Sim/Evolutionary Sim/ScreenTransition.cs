@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Evolutionary_Sim
 {
-    class ScreenTransition : Camera
+    class ScreenTransition : camera
     {
 
         public static List<FadeItem> items = new List<FadeItem>();

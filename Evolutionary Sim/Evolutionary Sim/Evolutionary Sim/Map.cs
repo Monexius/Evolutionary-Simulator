@@ -91,7 +91,9 @@ namespace Map_Animations
             GenerateCaves();
             GenerateRandomMud();
             spawnMudArea();
+            GenerateWaterWall();
             GenerateTerrain();
+           
 
             generateDetails();
             //spawnMudArea();
@@ -133,7 +135,7 @@ namespace Map_Animations
         }
         static public Rectangle SquareScreenRectangle(int x, int y) // does the same but in screen co ordinates
         {
-            return Camera.Transform(SquareWorldRectangle(x, y));
+            return camera.Transform(SquareWorldRectangle(x, y));
         }
         static public Rectangle SquareScreenRectangle(Vector2 square)
         {
@@ -203,16 +205,36 @@ namespace Map_Animations
                 GetSquareByPixelY((int)pixelLocation.Y),
                 layer);
         }
+
+        public static int[,] MergeLayers(int[,] layer1, int[,] layer2)
+        {
+            int[,] Layer = layer1;
+            for (int y = 0; y < MapHeight; y++)
+            {
+                for (int x = 0; x < MapWidth; x++)
+                {
+                    if (layer2[x, y] == 0)
+                    {
+                        Layer[x, y] = layer1[x, y];
+                    }
+                    else
+                    {
+                        Layer[x, y] = layer2[x, y];
+                   }
+                }
+            }
+            return Layer;
+        }
         #endregion
 
         #region Drawing
         static public void Draw(SpriteBatch spriteBatch, bool repeat, Texture2D textur)
         {
-            int startX = GetSquareByPixelX((int)Camera.Position.X); // decides how many squares should be drawn
-            int endX = GetSquareByPixelX((int)Camera.Position.X + Camera.ViewPortWidth);
+            int startX = GetSquareByPixelX((int)camera.Position.X); // decides how many squares should be drawn
+            int endX = GetSquareByPixelX((int)camera.Position.X + camera.ViewPortWidth);
 
-            int startY = GetSquareByPixelY((int)Camera.Position.Y);
-            int endY = GetSquareByPixelY((int)Camera.Position.Y + Camera.ViewPortHeight);
+            int startY = GetSquareByPixelY((int)camera.Position.Y);
+            int endY = GetSquareByPixelY((int)camera.Position.Y + camera.ViewPortHeight);
 
             for (int x = startX; x <= endX; x++)
             {
@@ -359,7 +381,19 @@ namespace Map_Animations
                     //}
                 }
         }
-
+        static public void GenerateWaterWall()
+        {
+            for (int y = 0; y < MapHeight; y++)
+            {
+                for (int x = 0; x < MapWidth; x++) // 50x50
+                {
+                 if(y == 0 || y == 1 || y == (MapHeight - 1) || y == (MapHeight - 2) || x == 0 || x == 1 || x == (MapWidth - 1) || x == (MapWidth - 2))
+                    {
+                        mapSquares[x, y] = 2;
+                    }
+                }
+            }
+        }
         static public void GenerateRandomMud()
         {
             int roomHeight = 6;
